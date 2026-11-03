@@ -1,0 +1,1954 @@
+{
+  "entries": [
+    {
+      "id": 1,
+      "date": "2026-09-03",
+      "cat": "travel",
+      "kind": "metro",
+      "label": "Metro",
+      "amount": 28,
+      "unit": "km",
+      "kg": 1.12
+    },
+    {
+      "id": 2,
+      "date": "2026-09-03",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.9,
+      "unit": "kWh",
+      "kg": 2.03
+    },
+    {
+      "id": 3,
+      "date": "2026-09-03",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 1.5
+    },
+    {
+      "id": 4,
+      "date": "2026-09-04",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 26,
+      "unit": "km",
+      "kg": 4.42
+    },
+    {
+      "id": 5,
+      "date": "2026-09-04",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 3.1,
+      "unit": "kWh",
+      "kg": 2.17
+    },
+    {
+      "id": 6,
+      "date": "2026-09-04",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 1.5
+    },
+    {
+      "id": 7,
+      "date": "2026-09-05",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 20,
+      "unit": "km",
+      "kg": 3.4
+    },
+    {
+      "id": 8,
+      "date": "2026-09-05",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.5,
+      "unit": "kWh",
+      "kg": 1.75
+    },
+    {
+      "id": 9,
+      "date": "2026-09-05",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 3
+    },
+    {
+      "id": 10,
+      "date": "2026-09-06",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.4,
+      "unit": "kWh",
+      "kg": 1.68
+    },
+    {
+      "id": 11,
+      "date": "2026-09-06",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 1.2
+    },
+    {
+      "id": 12,
+      "date": "2026-09-06",
+      "cat": "energy",
+      "kind": "lpg",
+      "label": "LPG cooking gas",
+      "amount": 0.5,
+      "unit": "kg",
+      "kg": 1.5
+    },
+    {
+      "id": 13,
+      "date": "2026-09-07",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 26,
+      "unit": "km",
+      "kg": 4.42
+    },
+    {
+      "id": 14,
+      "date": "2026-09-07",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 3,
+      "unit": "kWh",
+      "kg": 2.1
+    },
+    {
+      "id": 15,
+      "date": "2026-09-07",
+      "cat": "food",
+      "kind": "mutton",
+      "label": "Mutton meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 4
+    },
+    {
+      "id": 16,
+      "date": "2026-09-08",
+      "cat": "travel",
+      "kind": "metro",
+      "label": "Metro",
+      "amount": 28,
+      "unit": "km",
+      "kg": 1.12
+    },
+    {
+      "id": 17,
+      "date": "2026-09-08",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.8,
+      "unit": "kWh",
+      "kg": 1.96
+    },
+    {
+      "id": 18,
+      "date": "2026-09-08",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 19,
+      "date": "2026-09-09",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 26,
+      "unit": "km",
+      "kg": 4.42
+    },
+    {
+      "id": 20,
+      "date": "2026-09-09",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.4,
+      "unit": "kWh",
+      "kg": 1.68
+    },
+    {
+      "id": 21,
+      "date": "2026-09-09",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 22,
+      "date": "2026-09-10",
+      "cat": "travel",
+      "kind": "metro",
+      "label": "Metro",
+      "amount": 28,
+      "unit": "km",
+      "kg": 1.12
+    },
+    {
+      "id": 23,
+      "date": "2026-09-10",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.3,
+      "unit": "kWh",
+      "kg": 1.61
+    },
+    {
+      "id": 24,
+      "date": "2026-09-10",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 25,
+      "date": "2026-09-10",
+      "cat": "energy",
+      "kind": "lpg",
+      "label": "LPG cooking gas",
+      "amount": 0.5,
+      "unit": "kg",
+      "kg": 1.5
+    },
+    {
+      "id": 26,
+      "date": "2026-09-11",
+      "cat": "travel",
+      "kind": "metro",
+      "label": "Metro",
+      "amount": 28,
+      "unit": "km",
+      "kg": 1.12
+    },
+    {
+      "id": 27,
+      "date": "2026-09-11",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.4,
+      "unit": "kWh",
+      "kg": 1.68
+    },
+    {
+      "id": 28,
+      "date": "2026-09-11",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 29,
+      "date": "2026-09-12",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 20,
+      "unit": "km",
+      "kg": 3.4
+    },
+    {
+      "id": 30,
+      "date": "2026-09-12",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.1,
+      "unit": "kWh",
+      "kg": 1.47
+    },
+    {
+      "id": 31,
+      "date": "2026-09-12",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 1.2
+    },
+    {
+      "id": 32,
+      "date": "2026-09-13",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 20,
+      "unit": "km",
+      "kg": 3.4
+    },
+    {
+      "id": 33,
+      "date": "2026-09-13",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.3,
+      "unit": "kWh",
+      "kg": 1.61
+    },
+    {
+      "id": 34,
+      "date": "2026-09-13",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 1.2
+    },
+    {
+      "id": 35,
+      "date": "2026-09-14",
+      "cat": "travel",
+      "kind": "metro",
+      "label": "Metro",
+      "amount": 28,
+      "unit": "km",
+      "kg": 1.12
+    },
+    {
+      "id": 36,
+      "date": "2026-09-14",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 3.1,
+      "unit": "kWh",
+      "kg": 2.17
+    },
+    {
+      "id": 37,
+      "date": "2026-09-14",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 1.5
+    },
+    {
+      "id": 38,
+      "date": "2026-09-14",
+      "cat": "energy",
+      "kind": "lpg",
+      "label": "LPG cooking gas",
+      "amount": 0.5,
+      "unit": "kg",
+      "kg": 1.5
+    },
+    {
+      "id": 39,
+      "date": "2026-09-15",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 26,
+      "unit": "km",
+      "kg": 4.42
+    },
+    {
+      "id": 40,
+      "date": "2026-09-15",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.1,
+      "unit": "kWh",
+      "kg": 1.47
+    },
+    {
+      "id": 41,
+      "date": "2026-09-15",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 42,
+      "date": "2026-09-16",
+      "cat": "travel",
+      "kind": "auto",
+      "label": "Auto-rickshaw (CNG)",
+      "amount": 10,
+      "unit": "km",
+      "kg": 0.9
+    },
+    {
+      "id": 43,
+      "date": "2026-09-16",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.4,
+      "unit": "kWh",
+      "kg": 1.68
+    },
+    {
+      "id": 44,
+      "date": "2026-09-16",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 1.5
+    },
+    {
+      "id": 45,
+      "date": "2026-09-17",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 26,
+      "unit": "km",
+      "kg": 4.42
+    },
+    {
+      "id": 46,
+      "date": "2026-09-17",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.1,
+      "unit": "kWh",
+      "kg": 1.47
+    },
+    {
+      "id": 47,
+      "date": "2026-09-17",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 48,
+      "date": "2026-09-18",
+      "cat": "travel",
+      "kind": "auto",
+      "label": "Auto-rickshaw (CNG)",
+      "amount": 10,
+      "unit": "km",
+      "kg": 0.9
+    },
+    {
+      "id": 49,
+      "date": "2026-09-18",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.1,
+      "unit": "kWh",
+      "kg": 1.47
+    },
+    {
+      "id": 50,
+      "date": "2026-09-18",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 51,
+      "date": "2026-09-18",
+      "cat": "energy",
+      "kind": "lpg",
+      "label": "LPG cooking gas",
+      "amount": 0.5,
+      "unit": "kg",
+      "kg": 1.5
+    },
+    {
+      "id": 52,
+      "date": "2026-09-19",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 20,
+      "unit": "km",
+      "kg": 3.4
+    },
+    {
+      "id": 53,
+      "date": "2026-09-19",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2,
+      "unit": "kWh",
+      "kg": 1.4
+    },
+    {
+      "id": 54,
+      "date": "2026-09-19",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 1.2
+    },
+    {
+      "id": 55,
+      "date": "2026-09-20",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 20,
+      "unit": "km",
+      "kg": 3.4
+    },
+    {
+      "id": 56,
+      "date": "2026-09-20",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2,
+      "unit": "kWh",
+      "kg": 1.4
+    },
+    {
+      "id": 57,
+      "date": "2026-09-20",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 3
+    },
+    {
+      "id": 58,
+      "date": "2026-09-21",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 26,
+      "unit": "km",
+      "kg": 4.42
+    },
+    {
+      "id": 59,
+      "date": "2026-09-21",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.3,
+      "unit": "kWh",
+      "kg": 1.61
+    },
+    {
+      "id": 60,
+      "date": "2026-09-21",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 61,
+      "date": "2026-09-22",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 26,
+      "unit": "km",
+      "kg": 4.42
+    },
+    {
+      "id": 62,
+      "date": "2026-09-22",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.6,
+      "unit": "kWh",
+      "kg": 1.82
+    },
+    {
+      "id": 63,
+      "date": "2026-09-22",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 64,
+      "date": "2026-09-22",
+      "cat": "energy",
+      "kind": "lpg",
+      "label": "LPG cooking gas",
+      "amount": 0.5,
+      "unit": "kg",
+      "kg": 1.5
+    },
+    {
+      "id": 65,
+      "date": "2026-09-23",
+      "cat": "travel",
+      "kind": "auto",
+      "label": "Auto-rickshaw (CNG)",
+      "amount": 10,
+      "unit": "km",
+      "kg": 0.9
+    },
+    {
+      "id": 66,
+      "date": "2026-09-23",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.6,
+      "unit": "kWh",
+      "kg": 1.82
+    },
+    {
+      "id": 67,
+      "date": "2026-09-23",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 1.5
+    },
+    {
+      "id": 68,
+      "date": "2026-09-24",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 26,
+      "unit": "km",
+      "kg": 4.42
+    },
+    {
+      "id": 69,
+      "date": "2026-09-24",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 3.1,
+      "unit": "kWh",
+      "kg": 2.17
+    },
+    {
+      "id": 70,
+      "date": "2026-09-24",
+      "cat": "food",
+      "kind": "egg",
+      "label": "Egg meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.9
+    },
+    {
+      "id": 71,
+      "date": "2026-09-25",
+      "cat": "travel",
+      "kind": "auto",
+      "label": "Auto-rickshaw (CNG)",
+      "amount": 10,
+      "unit": "km",
+      "kg": 0.9
+    },
+    {
+      "id": 72,
+      "date": "2026-09-25",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2,
+      "unit": "kWh",
+      "kg": 1.4
+    },
+    {
+      "id": 73,
+      "date": "2026-09-25",
+      "cat": "food",
+      "kind": "egg",
+      "label": "Egg meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.9
+    },
+    {
+      "id": 74,
+      "date": "2026-09-26",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 20,
+      "unit": "km",
+      "kg": 3.4
+    },
+    {
+      "id": 75,
+      "date": "2026-09-26",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 3.1,
+      "unit": "kWh",
+      "kg": 2.17
+    },
+    {
+      "id": 76,
+      "date": "2026-09-26",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 3
+    },
+    {
+      "id": 77,
+      "date": "2026-09-26",
+      "cat": "energy",
+      "kind": "lpg",
+      "label": "LPG cooking gas",
+      "amount": 0.5,
+      "unit": "kg",
+      "kg": 1.5
+    },
+    {
+      "id": 78,
+      "date": "2026-09-27",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 20,
+      "unit": "km",
+      "kg": 3.4
+    },
+    {
+      "id": 79,
+      "date": "2026-09-27",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2,
+      "unit": "kWh",
+      "kg": 1.4
+    },
+    {
+      "id": 80,
+      "date": "2026-09-27",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 1.2
+    },
+    {
+      "id": 81,
+      "date": "2026-09-28",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 26,
+      "unit": "km",
+      "kg": 4.42
+    },
+    {
+      "id": 82,
+      "date": "2026-09-28",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.6,
+      "unit": "kWh",
+      "kg": 1.82
+    },
+    {
+      "id": 83,
+      "date": "2026-09-28",
+      "cat": "food",
+      "kind": "egg",
+      "label": "Egg meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.9
+    },
+    {
+      "id": 84,
+      "date": "2026-09-29",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 26,
+      "unit": "km",
+      "kg": 4.42
+    },
+    {
+      "id": 85,
+      "date": "2026-09-29",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.6,
+      "unit": "kWh",
+      "kg": 1.82
+    },
+    {
+      "id": 86,
+      "date": "2026-09-29",
+      "cat": "food",
+      "kind": "mutton",
+      "label": "Mutton meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 4
+    },
+    {
+      "id": 87,
+      "date": "2026-09-30",
+      "cat": "travel",
+      "kind": "auto",
+      "label": "Auto-rickshaw (CNG)",
+      "amount": 10,
+      "unit": "km",
+      "kg": 0.9
+    },
+    {
+      "id": 88,
+      "date": "2026-09-30",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.3,
+      "unit": "kWh",
+      "kg": 1.61
+    },
+    {
+      "id": 89,
+      "date": "2026-09-30",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 90,
+      "date": "2026-09-30",
+      "cat": "energy",
+      "kind": "lpg",
+      "label": "LPG cooking gas",
+      "amount": 0.5,
+      "unit": "kg",
+      "kg": 1.5
+    },
+    {
+      "id": 91,
+      "date": "2026-10-01",
+      "cat": "travel",
+      "kind": "metro",
+      "label": "Metro",
+      "amount": 28,
+      "unit": "km",
+      "kg": 1.12
+    },
+    {
+      "id": 92,
+      "date": "2026-10-01",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.5,
+      "unit": "kWh",
+      "kg": 1.75
+    },
+    {
+      "id": 93,
+      "date": "2026-10-01",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 1.5
+    },
+    {
+      "id": 94,
+      "date": "2026-10-02",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 26,
+      "unit": "km",
+      "kg": 4.42
+    },
+    {
+      "id": 95,
+      "date": "2026-10-02",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.2,
+      "unit": "kWh",
+      "kg": 1.54
+    },
+    {
+      "id": 96,
+      "date": "2026-10-02",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 97,
+      "date": "2026-10-03",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 20,
+      "unit": "km",
+      "kg": 3.4
+    },
+    {
+      "id": 98,
+      "date": "2026-10-03",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.5,
+      "unit": "kWh",
+      "kg": 1.75
+    },
+    {
+      "id": 99,
+      "date": "2026-10-03",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 1.2
+    },
+    {
+      "id": 100,
+      "date": "2026-10-04",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.7,
+      "unit": "kWh",
+      "kg": 1.89
+    },
+    {
+      "id": 101,
+      "date": "2026-10-04",
+      "cat": "food",
+      "kind": "egg",
+      "label": "Egg meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 1.8
+    },
+    {
+      "id": 102,
+      "date": "2026-10-04",
+      "cat": "energy",
+      "kind": "lpg",
+      "label": "LPG cooking gas",
+      "amount": 0.5,
+      "unit": "kg",
+      "kg": 1.5
+    },
+    {
+      "id": 103,
+      "date": "2026-10-05",
+      "cat": "travel",
+      "kind": "auto",
+      "label": "Auto-rickshaw (CNG)",
+      "amount": 10,
+      "unit": "km",
+      "kg": 0.9
+    },
+    {
+      "id": 104,
+      "date": "2026-10-05",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.7,
+      "unit": "kWh",
+      "kg": 1.89
+    },
+    {
+      "id": 105,
+      "date": "2026-10-05",
+      "cat": "food",
+      "kind": "mutton",
+      "label": "Mutton meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 4
+    },
+    {
+      "id": 106,
+      "date": "2026-10-06",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 26,
+      "unit": "km",
+      "kg": 4.42
+    },
+    {
+      "id": 107,
+      "date": "2026-10-06",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.5,
+      "unit": "kWh",
+      "kg": 1.75
+    },
+    {
+      "id": 108,
+      "date": "2026-10-06",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 1.5
+    },
+    {
+      "id": 109,
+      "date": "2026-10-07",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 26,
+      "unit": "km",
+      "kg": 4.42
+    },
+    {
+      "id": 110,
+      "date": "2026-10-07",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.6,
+      "unit": "kWh",
+      "kg": 1.82
+    },
+    {
+      "id": 111,
+      "date": "2026-10-07",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 112,
+      "date": "2026-10-08",
+      "cat": "travel",
+      "kind": "auto",
+      "label": "Auto-rickshaw (CNG)",
+      "amount": 10,
+      "unit": "km",
+      "kg": 0.9
+    },
+    {
+      "id": 113,
+      "date": "2026-10-08",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.1,
+      "unit": "kWh",
+      "kg": 1.47
+    },
+    {
+      "id": 114,
+      "date": "2026-10-08",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 115,
+      "date": "2026-10-08",
+      "cat": "energy",
+      "kind": "lpg",
+      "label": "LPG cooking gas",
+      "amount": 0.5,
+      "unit": "kg",
+      "kg": 1.5
+    },
+    {
+      "id": 116,
+      "date": "2026-10-09",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 26,
+      "unit": "km",
+      "kg": 4.42
+    },
+    {
+      "id": 117,
+      "date": "2026-10-09",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.4,
+      "unit": "kWh",
+      "kg": 1.68
+    },
+    {
+      "id": 118,
+      "date": "2026-10-09",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 1.5
+    },
+    {
+      "id": 119,
+      "date": "2026-10-10",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 20,
+      "unit": "km",
+      "kg": 3.4
+    },
+    {
+      "id": 120,
+      "date": "2026-10-10",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.6,
+      "unit": "kWh",
+      "kg": 1.82
+    },
+    {
+      "id": 121,
+      "date": "2026-10-10",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 3
+    },
+    {
+      "id": 122,
+      "date": "2026-10-11",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 20,
+      "unit": "km",
+      "kg": 3.4
+    },
+    {
+      "id": 123,
+      "date": "2026-10-11",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.1,
+      "unit": "kWh",
+      "kg": 1.47
+    },
+    {
+      "id": 124,
+      "date": "2026-10-11",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 1.2
+    },
+    {
+      "id": 125,
+      "date": "2026-10-12",
+      "cat": "travel",
+      "kind": "metro",
+      "label": "Metro",
+      "amount": 28,
+      "unit": "km",
+      "kg": 1.12
+    },
+    {
+      "id": 126,
+      "date": "2026-10-12",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.2,
+      "unit": "kWh",
+      "kg": 1.54
+    },
+    {
+      "id": 127,
+      "date": "2026-10-12",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 128,
+      "date": "2026-10-12",
+      "cat": "energy",
+      "kind": "lpg",
+      "label": "LPG cooking gas",
+      "amount": 0.5,
+      "unit": "kg",
+      "kg": 1.5
+    },
+    {
+      "id": 129,
+      "date": "2026-10-13",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 26,
+      "unit": "km",
+      "kg": 4.42
+    },
+    {
+      "id": 130,
+      "date": "2026-10-13",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.9,
+      "unit": "kWh",
+      "kg": 2.03
+    },
+    {
+      "id": 131,
+      "date": "2026-10-13",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 1.5
+    },
+    {
+      "id": 132,
+      "date": "2026-10-14",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 26,
+      "unit": "km",
+      "kg": 4.42
+    },
+    {
+      "id": 133,
+      "date": "2026-10-14",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.5,
+      "unit": "kWh",
+      "kg": 1.75
+    },
+    {
+      "id": 134,
+      "date": "2026-10-14",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 1.5
+    },
+    {
+      "id": 135,
+      "date": "2026-10-15",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 26,
+      "unit": "km",
+      "kg": 4.42
+    },
+    {
+      "id": 136,
+      "date": "2026-10-15",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 3,
+      "unit": "kWh",
+      "kg": 2.1
+    },
+    {
+      "id": 137,
+      "date": "2026-10-15",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 1.5
+    },
+    {
+      "id": 138,
+      "date": "2026-10-16",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 26,
+      "unit": "km",
+      "kg": 4.42
+    },
+    {
+      "id": 139,
+      "date": "2026-10-16",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.9,
+      "unit": "kWh",
+      "kg": 2.03
+    },
+    {
+      "id": 140,
+      "date": "2026-10-16",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 141,
+      "date": "2026-10-16",
+      "cat": "energy",
+      "kind": "lpg",
+      "label": "LPG cooking gas",
+      "amount": 0.5,
+      "unit": "kg",
+      "kg": 1.5
+    },
+    {
+      "id": 142,
+      "date": "2026-10-17",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 3,
+      "unit": "kWh",
+      "kg": 2.1
+    },
+    {
+      "id": 143,
+      "date": "2026-10-17",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 1.2
+    },
+    {
+      "id": 144,
+      "date": "2026-10-18",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 20,
+      "unit": "km",
+      "kg": 3.4
+    },
+    {
+      "id": 145,
+      "date": "2026-10-18",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.7,
+      "unit": "kWh",
+      "kg": 1.89
+    },
+    {
+      "id": 146,
+      "date": "2026-10-18",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 1.2
+    },
+    {
+      "id": 147,
+      "date": "2026-10-19",
+      "cat": "travel",
+      "kind": "metro",
+      "label": "Metro",
+      "amount": 28,
+      "unit": "km",
+      "kg": 1.12
+    },
+    {
+      "id": 148,
+      "date": "2026-10-19",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.8,
+      "unit": "kWh",
+      "kg": 1.96
+    },
+    {
+      "id": 149,
+      "date": "2026-10-19",
+      "cat": "food",
+      "kind": "mutton",
+      "label": "Mutton meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 4
+    },
+    {
+      "id": 150,
+      "date": "2026-10-20",
+      "cat": "travel",
+      "kind": "metro",
+      "label": "Metro",
+      "amount": 28,
+      "unit": "km",
+      "kg": 1.12
+    },
+    {
+      "id": 151,
+      "date": "2026-10-20",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 3.2,
+      "unit": "kWh",
+      "kg": 2.24
+    },
+    {
+      "id": 152,
+      "date": "2026-10-20",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 153,
+      "date": "2026-10-20",
+      "cat": "energy",
+      "kind": "lpg",
+      "label": "LPG cooking gas",
+      "amount": 0.5,
+      "unit": "kg",
+      "kg": 1.5
+    },
+    {
+      "id": 154,
+      "date": "2026-10-21",
+      "cat": "travel",
+      "kind": "auto",
+      "label": "Auto-rickshaw (CNG)",
+      "amount": 10,
+      "unit": "km",
+      "kg": 0.9
+    },
+    {
+      "id": 155,
+      "date": "2026-10-21",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.8,
+      "unit": "kWh",
+      "kg": 1.96
+    },
+    {
+      "id": 156,
+      "date": "2026-10-21",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 157,
+      "date": "2026-10-22",
+      "cat": "travel",
+      "kind": "metro",
+      "label": "Metro",
+      "amount": 28,
+      "unit": "km",
+      "kg": 1.12
+    },
+    {
+      "id": 158,
+      "date": "2026-10-22",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.2,
+      "unit": "kWh",
+      "kg": 1.54
+    },
+    {
+      "id": 159,
+      "date": "2026-10-22",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 1.5
+    },
+    {
+      "id": 160,
+      "date": "2026-10-23",
+      "cat": "travel",
+      "kind": "auto",
+      "label": "Auto-rickshaw (CNG)",
+      "amount": 10,
+      "unit": "km",
+      "kg": 0.9
+    },
+    {
+      "id": 161,
+      "date": "2026-10-23",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.9,
+      "unit": "kWh",
+      "kg": 2.03
+    },
+    {
+      "id": 162,
+      "date": "2026-10-23",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 163,
+      "date": "2026-10-24",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.5,
+      "unit": "kWh",
+      "kg": 1.75
+    },
+    {
+      "id": 164,
+      "date": "2026-10-24",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 3
+    },
+    {
+      "id": 165,
+      "date": "2026-10-24",
+      "cat": "energy",
+      "kind": "lpg",
+      "label": "LPG cooking gas",
+      "amount": 0.5,
+      "unit": "kg",
+      "kg": 1.5
+    },
+    {
+      "id": 166,
+      "date": "2026-10-25",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 20,
+      "unit": "km",
+      "kg": 3.4
+    },
+    {
+      "id": 167,
+      "date": "2026-10-25",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.7,
+      "unit": "kWh",
+      "kg": 1.89
+    },
+    {
+      "id": 168,
+      "date": "2026-10-25",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 3
+    },
+    {
+      "id": 169,
+      "date": "2026-10-26",
+      "cat": "travel",
+      "kind": "metro",
+      "label": "Metro",
+      "amount": 28,
+      "unit": "km",
+      "kg": 1.12
+    },
+    {
+      "id": 170,
+      "date": "2026-10-26",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.3,
+      "unit": "kWh",
+      "kg": 1.61
+    },
+    {
+      "id": 171,
+      "date": "2026-10-26",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 172,
+      "date": "2026-10-27",
+      "cat": "travel",
+      "kind": "metro",
+      "label": "Metro",
+      "amount": 28,
+      "unit": "km",
+      "kg": 1.12
+    },
+    {
+      "id": 173,
+      "date": "2026-10-27",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 3.2,
+      "unit": "kWh",
+      "kg": 2.24
+    },
+    {
+      "id": 174,
+      "date": "2026-10-27",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 175,
+      "date": "2026-10-28",
+      "cat": "travel",
+      "kind": "metro",
+      "label": "Metro",
+      "amount": 28,
+      "unit": "km",
+      "kg": 1.12
+    },
+    {
+      "id": 176,
+      "date": "2026-10-28",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.5,
+      "unit": "kWh",
+      "kg": 1.75
+    },
+    {
+      "id": 177,
+      "date": "2026-10-28",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 1.5
+    },
+    {
+      "id": 178,
+      "date": "2026-10-28",
+      "cat": "energy",
+      "kind": "lpg",
+      "label": "LPG cooking gas",
+      "amount": 0.5,
+      "unit": "kg",
+      "kg": 1.5
+    },
+    {
+      "id": 179,
+      "date": "2026-10-29",
+      "cat": "travel",
+      "kind": "auto",
+      "label": "Auto-rickshaw (CNG)",
+      "amount": 10,
+      "unit": "km",
+      "kg": 0.9
+    },
+    {
+      "id": 180,
+      "date": "2026-10-29",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 3.2,
+      "unit": "kWh",
+      "kg": 2.24
+    },
+    {
+      "id": 181,
+      "date": "2026-10-29",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 182,
+      "date": "2026-10-30",
+      "cat": "travel",
+      "kind": "metro",
+      "label": "Metro",
+      "amount": 28,
+      "unit": "km",
+      "kg": 1.12
+    },
+    {
+      "id": 183,
+      "date": "2026-10-30",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.8,
+      "unit": "kWh",
+      "kg": 1.96
+    },
+    {
+      "id": 184,
+      "date": "2026-10-30",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 1,
+      "unit": "meals",
+      "kg": 0.6
+    },
+    {
+      "id": 185,
+      "date": "2026-10-31",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 20,
+      "unit": "km",
+      "kg": 3.4
+    },
+    {
+      "id": 186,
+      "date": "2026-10-31",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.2,
+      "unit": "kWh",
+      "kg": 1.54
+    },
+    {
+      "id": 187,
+      "date": "2026-10-31",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 1.2
+    },
+    {
+      "id": 188,
+      "date": "2026-11-01",
+      "cat": "travel",
+      "kind": "car",
+      "label": "Car (petrol)",
+      "amount": 20,
+      "unit": "km",
+      "kg": 3.4
+    },
+    {
+      "id": 189,
+      "date": "2026-11-01",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 2.6,
+      "unit": "kWh",
+      "kg": 1.82
+    },
+    {
+      "id": 190,
+      "date": "2026-11-01",
+      "cat": "food",
+      "kind": "chicken",
+      "label": "Chicken meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 3
+    },
+    {
+      "id": 191,
+      "date": "2026-11-01",
+      "cat": "energy",
+      "kind": "lpg",
+      "label": "LPG cooking gas",
+      "amount": 0.5,
+      "unit": "kg",
+      "kg": 1.5
+    },
+    {
+      "id": 192,
+      "date": "2026-10-27",
+      "cat": "shopping",
+      "kind": "tee",
+      "label": "Cotton T-shirt",
+      "amount": 1,
+      "unit": "items",
+      "kg": 7
+    },
+    {
+      "id": 193,
+      "date": "2026-10-15",
+      "cat": "shopping",
+      "kind": "jeans",
+      "label": "Jeans",
+      "amount": 1,
+      "unit": "items",
+      "kg": 25
+    },
+    {
+      "id": 194,
+      "date": "2026-09-29",
+      "cat": "shopping",
+      "kind": "phone",
+      "label": "Smartphone",
+      "amount": 1,
+      "unit": "items",
+      "kg": 65
+    },
+    {
+      "id": 195,
+      "date": "2026-09-14",
+      "cat": "shopping",
+      "kind": "tee",
+      "label": "Cotton T-shirt",
+      "amount": 2,
+      "unit": "items",
+      "kg": 14
+    }
+  ]
+}
