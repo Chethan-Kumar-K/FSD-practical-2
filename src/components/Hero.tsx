@@ -51,7 +51,7 @@ export function Hero({ entries }: HeroProps) {
           <h1 aria-label={HEADLINE}>
             {HEADLINE.split(' ').map((w, i) => (
               <span className="word-mask" key={i} aria-hidden="true">
-                <span className="word">{w}</span>{' '}
+                <span className="word">{w}</span>
               </span>
             ))}
           </h1>

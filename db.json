@@ -1949,6 +1949,26 @@
       "amount": 2,
       "unit": "items",
       "kg": 14
+    },
+    {
+      "date": "2026-11-05",
+      "cat": "energy",
+      "kind": "elec",
+      "label": "Electricity",
+      "amount": 5,
+      "unit": "kWh",
+      "kg": 3.5,
+      "id": 197
+    },
+    {
+      "date": "2026-11-05",
+      "cat": "food",
+      "kind": "veg",
+      "label": "Vegetarian meal",
+      "amount": 2,
+      "unit": "meals",
+      "kg": 1.2,
+      "id": 198
     }
   ]
 }
