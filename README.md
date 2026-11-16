@@ -35,7 +35,7 @@ Or in two terminals: `npm run server` and `npm run dev`. Open http://localhost:5
 
 All plugin registration is in `src/lib/gsap.ts` and every animation uses the `useGSAP` hook (automatic cleanup).
 
-- **Hero:** timeline with word-by-word headline reveal, then the receipt drops in.
+- **Hero:** a [Scroll Craft](https://github.com/nateherkai/scroll-craft)-inspired timeline reveals the headline and receipt, then gives them different scroll-driven movement rates.
 - **Header:** staggered slide-in.
 - **Log rows:** staggered entrance, a highlight flash for a new record, slide-out on delete.
 - **Numbers:** `AnimatedNumber` counts up on every change.

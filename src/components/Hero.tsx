@@ -40,6 +40,26 @@ export function Hero({ entries }: HeroProps) {
       tl.from('.word', { yPercent: 110, opacity: 0, duration: 0.7, stagger: 0.05 })
         .from('.hero-lead, .hero-cta a', { y: 24, opacity: 0, duration: 0.6, stagger: 0.1 }, '-=0.3')
         .from('.receipt', { y: 70, rotate: -3, opacity: 0, duration: 0.9, ease: 'back.out(1.4)' }, '-=0.8');
+
+      const scrollRange = {
+        trigger: root.current,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.6,
+        invalidateOnRefresh: true,
+      };
+
+      gsap.to('.hero-copy', {
+        yPercent: () => (window.innerWidth >= 900 ? -5 : -2),
+        ease: 'none',
+        scrollTrigger: scrollRange,
+      });
+      gsap.to('.receipt', {
+        yPercent: () => (window.innerWidth >= 900 ? 5 : 2),
+        scale: () => (window.innerWidth >= 900 ? 0.97 : 0.99),
+        ease: 'none',
+        scrollTrigger: scrollRange,
+      });
     },
     { scope: root },
   );
