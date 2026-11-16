@@ -19,9 +19,6 @@ export function Footer() {
               <a href="#pledges">Pledges</a>
             </li>
             <li>
-              <a href="#browser-features">Browser compatibility</a>
-            </li>
-            <li>
               <a href="#home">Back to top</a>
             </li>
           </ul>
@@ -29,8 +26,8 @@ export function Footer() {
         <div>
           <h3>About the numbers</h3>
           <p>
-            Emission factors are illustrative values for this exercise. Records are stored through JSON Server in
-            <code> db.json</code>.
+            Emission factors are illustrative values for this exercise. Records are stored in a SQLite database,
+            <code> data/carbon.db</code>.
           </p>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Button } from './ui/Button';
+import { getReminder, saveReminder } from '../api/reminderApi';
 
 interface ReminderSettings {
   enabled: boolean;
@@ -7,13 +8,15 @@ interface ReminderSettings {
   lastFired: string;
 }
 
-const STORAGE_KEY = 'cfi.reminder';
+const LEGACY_KEY = 'cfi.reminder'; // where the settings lived before SQLite; read once, then removed
 const DEFAULT_SETTINGS: ReminderSettings = { enabled: false, time: '20:00', lastFired: '' };
 
-function readSettings(): ReminderSettings {
+function readLegacy(): ReminderSettings | null {
   try {
-    const value: unknown = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? 'null');
-    if (typeof value !== 'object' || value === null) return DEFAULT_SETTINGS;
+    const raw = localStorage.getItem(LEGACY_KEY);
+    if (raw === null) return null;
+    const value: unknown = JSON.parse(raw);
+    if (typeof value !== 'object' || value === null) return null;
     const saved = value as Partial<ReminderSettings>;
     return {
       enabled: saved.enabled === true,
@@ -21,7 +24,7 @@ function readSettings(): ReminderSettings {
       lastFired: typeof saved.lastFired === 'string' ? saved.lastFired : '',
     };
   } catch {
-    return DEFAULT_SETTINGS;
+    return null;
   }
 }
 
@@ -36,19 +39,37 @@ interface DailyReminderProps {
 }
 
 export function DailyReminder({ hasLoggedToday, onNotify }: DailyReminderProps) {
-  const [settings, setSettings] = useState(readSettings);
+  const [settings, setSettings] = useState<ReminderSettings>(DEFAULT_SETTINGS);
+  const [loaded, setLoaded] = useState(false);
   const [status, setStatus] = useState('');
 
+  // Load the settings from SQLite once. Settings kept in this browser by the old version are moved over.
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-    } catch {
-      setStatus('Reminder settings could not be saved in this browser.');
-    }
-  }, [settings]);
+    let cancelled = false;
+    getReminder()
+      .then(({ saved, ...stored }) => {
+        if (cancelled) return;
+        const legacy = saved ? null : readLegacy();
+        setSettings(legacy ?? stored);
+        if (legacy) {
+          try { localStorage.removeItem(LEGACY_KEY); } catch { /* storage blocked */ }
+        }
+        setLoaded(true);
+      })
+      .catch(() => {
+        if (!cancelled) setStatus('Reminder settings could not be loaded. Is the API server running on port 3001?');
+      });
+    return () => { cancelled = true; };
+  }, []);
+
+  // Every change is stored in SQLite (only after the first load, so the defaults never overwrite saved settings)
+  useEffect(() => {
+    if (!loaded) return;
+    saveReminder(settings).catch(() => setStatus('Reminder settings could not be saved. Is the API server running on port 3001?'));
+  }, [settings, loaded]);
 
   useEffect(() => {
-    if (!settings.enabled) return;
+    if (!loaded || !settings.enabled) return;
     const check = () => {
       const now = new Date();
       const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
@@ -71,7 +92,7 @@ export function DailyReminder({ hasLoggedToday, onNotify }: DailyReminderProps) 
     const interval = window.setInterval(check, 30000);
     check();
     return () => window.clearInterval(interval);
-  }, [hasLoggedToday, onNotify, settings]);
+  }, [hasLoggedToday, onNotify, settings, loaded]);
 
   async function toggleReminder() {
     if (settings.enabled) {

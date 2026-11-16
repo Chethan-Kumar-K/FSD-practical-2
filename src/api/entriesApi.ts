@@ -1,9 +1,9 @@
 import type { EntryInput, FootprintEntry } from '../types';
 
-/** JSON Server base URL. Override with VITE_API_URL in a .env file if needed. */
+/** API base URL (Express + SQLite). Override with VITE_API_URL in a .env file if needed. */
 const BASE: string = import.meta.env.VITE_API_URL ?? 'http://localhost:3001';
 
-async function request<T>(path: string, init?: RequestInit): Promise<T> {
+export async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(BASE + path, {
     headers: { 'Content-Type': 'application/json' },
     ...init,

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import type { EntryInput, FootprintEntry } from '../types';
 import * as api from '../api/entriesApi';
 
-/** Holds the log in state and keeps it in step with JSON Server (full CRUD). */
+/** Holds the log in state and keeps it in step with the SQLite API (full CRUD). */
 export function useEntries() {
   const [entries, setEntries] = useState<FootprintEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +14,7 @@ export function useEntries() {
       setEntries(await api.listEntries());
       setError(null);
     } catch {
-      setError('Could not reach JSON Server on port 3001. Start it with "npm run server" and reload.');
+      setError('Could not reach the API on port 3001. Start it with "npm run server" and reload.');
     } finally {
       setLoading(false);
     }

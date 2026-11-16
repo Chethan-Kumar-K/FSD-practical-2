@@ -96,7 +96,7 @@ for (const [cat, c] of Object.entries(categories) as [CategoryKey, CategoryDef][
   }
 }
 
-/** Builds the record that is sent to JSON Server (kg is calculated here, from the catalogue) */
+/** Builds the record that is sent to the API (kg is calculated here, from the catalogue) */
 export function buildEntry(date: string, kind: string, amount: number): EntryInput {
   const k = KIND[kind];
   return { date, cat: k.cat, kind, label: k.label, amount, unit: k.unit, kg: round3(amount * k.factor) };

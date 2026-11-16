@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { EntryInput, FootprintEntry, Pledge } from './types';
 import { useEntries } from './hooks/useEntries';
 import { useAnalysis } from './hooks/useAnalysis';
+import { usePledges } from './hooks/usePledges';
 import { CAT_NAME, DAILY_BUDGET, buildEntry } from './data/catalogue';
 import { amountText, fmt, niceDate, todayStr } from './utils/format';
 import { gsap, prefersReducedMotion } from './lib/gsap';
@@ -21,7 +22,6 @@ import { ProgressPanel } from './components/ProgressPanel';
 import { TripTracker } from './components/TripTracker';
 import { DailyReminder } from './components/DailyReminder';
 import { ScrollProgress } from './components/ScrollProgress';
-import { ApiSupport } from './components/ApiSupport';
 
 function initialDark(): boolean {
   try {
@@ -33,34 +33,13 @@ function initialDark(): boolean {
   return window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
-function initialPledges(): Pledge[] {
-  try {
-    const saved: unknown = JSON.parse(localStorage.getItem('cfi.pledges') ?? '[]');
-    if (!Array.isArray(saved)) return [];
-    return saved.filter(
-      (pledge): pledge is Pledge =>
-        typeof pledge === 'object' &&
-        pledge !== null &&
-        'id' in pledge &&
-        'title' in pledge &&
-        'saving' in pledge &&
-        typeof pledge.id === 'string' &&
-        typeof pledge.title === 'string' &&
-        Number.isFinite(pledge.saving) &&
-        pledge.saving >= 0,
-    );
-  } catch {
-    return [];
-  }
-}
-
 export default function App() {
   const { entries, loading, error, reload, add, update, remove, addMany, clearAll } = useEntries();
   const [query, setQuery] = useState('');
   const [editing, setEditing] = useState<FootprintEntry | null>(null);
   const [toast, setToast] = useState<ToastMessage | null>(null);
   const [dark, setDark] = useState(initialDark);
-  const [pledges, setPledges] = useState<Pledge[]>(initialPledges);
+  const { pledges, add: savePledge, remove: deletePledge, addMany: savePledges, clear: clearPledges } = usePledges();
   const [undoEntry, setUndoEntry] = useState<FootprintEntry | null>(null);
   const [tripPrefill, setTripPrefill] = useState<{ kind: string; amount: number; version: number } | null>(null);
   const [today, setToday] = useState(todayStr);
@@ -103,7 +82,7 @@ export default function App() {
   }, [toast]);
 
   const notify = useCallback((text: string) => setToast({ id: Date.now(), text }), []);
-  const { analysis, mode: analysisMode } = useAnalysis(entries, today);
+  const { analysis } = useAnalysis(entries, today);
   const toggleTheme = useCallback(() => {
     setDark((current) => {
       const next = !current;
@@ -153,7 +132,7 @@ export default function App() {
       }
       return true;
     } catch {
-      notify('Could not save. Is JSON Server running on port 3001?');
+      notify('Could not save. Is the API server running on port 3001?');
       return false;
     }
   }
@@ -167,7 +146,7 @@ export default function App() {
       notify('Entry deleted. Press Ctrl+Z to undo.');
       return true;
     } catch {
-      notify('Could not delete. Is JSON Server running on port 3001?');
+      notify('Could not delete. Is the API server running on port 3001?');
       return false;
     }
   }
@@ -177,7 +156,7 @@ export default function App() {
       const repeated = await add(buildEntry(today, entry.kind, entry.amount));
       notify(`Logged again today: ${repeated.label}, ${amountText(repeated.amount, repeated.unit)}.`);
     } catch {
-      notify('Could not repeat this activity. Is JSON Server running on port 3001?');
+      notify('Could not repeat this activity. Is the API server running on port 3001?');
     }
   }
 
@@ -188,28 +167,27 @@ export default function App() {
       setUndoEntry(null);
       notify(`${restored.label} restored.`);
     } catch {
-      notify('Could not restore the entry. Is JSON Server running on port 3001?');
+      notify('Could not restore the entry. Is the API server running on port 3001?');
     }
   }
 
-  function savePledges(next: Pledge[]) {
-    setPledges(next);
-    try {
-      localStorage.setItem('cfi.pledges', JSON.stringify(next));
-    } catch {
-      notify('Pledges changed, but this browser could not save them.');
-    }
-  }
-
-  function addPledge(pledge: Pledge) {
+  async function addPledge(pledge: Pledge) {
     if (pledges.some((item) => item.id === pledge.id)) return;
-    savePledges([...pledges, pledge]);
-    notify(`Pledged: ${pledge.title}`);
+    try {
+      await savePledge(pledge);
+      notify(`Pledged: ${pledge.title}`);
+    } catch {
+      notify('Could not save the pledge. Is the API server running on port 3001?');
+    }
   }
 
-  function removePledge(id: string) {
-    savePledges(pledges.filter((pledge) => pledge.id !== id));
-    notify('Removed from pledges.');
+  async function removePledge(id: string) {
+    try {
+      await deletePledge(id);
+      notify('Removed from pledges.');
+    } catch {
+      notify('Could not remove the pledge. Is the API server running on port 3001?');
+    }
   }
 
   function handleEdit(entry: FootprintEntry) {
@@ -243,7 +221,7 @@ export default function App() {
   }, [undoEntry, handleUndo]);
 
   useEffect(() => {
-    const offline = () => notify('You are offline. Changes require a connection to JSON Server.');
+    const offline = () => notify('You are offline. Changes require a connection to the API server.');
     const online = () => notify('Back online.');
     window.addEventListener('offline', offline);
     window.addEventListener('online', online);
@@ -345,9 +323,9 @@ export default function App() {
               analysis={analysis}
               pledges={pledges}
               onImport={addMany}
-              onImportPledges={(imported) => savePledges([...pledges, ...imported])}
+              onImportPledges={(imported) => void savePledges(imported).catch(() => notify('Some pledges could not be saved. Is the API server running on port 3001?'))}
               onClear={clearAll}
-              onClearPledges={() => savePledges([])}
+              onClearPledges={() => void clearPledges().catch(() => notify('Pledges could not be cleared. Is the API server running on port 3001?'))}
               onNotify={notify}
             />
           </Reveal>
@@ -367,11 +345,6 @@ export default function App() {
         <section id="pledges" className="section section-tint">
           <Reveal className="container">
             <Recommendations recs={analysis.recs} pledges={pledges} onAdd={addPledge} onRemove={removePledge} />
-          </Reveal>
-        </section>
-        <section id="browser-features" className="section">
-          <Reveal className="container">
-            <ApiSupport analysisMode={analysisMode} />
           </Reveal>
         </section>
       </main>
