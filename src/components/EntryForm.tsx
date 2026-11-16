@@ -12,6 +12,7 @@ interface EntryFormProps {
   /** Resolves true when the server accepted the record. */
   onSubmit: (input: EntryInput) => Promise<boolean>;
   onCancel: () => void;
+  tripPrefill?: { kind: string; amount: number; version: number } | null;
 }
 
 interface Errors {
@@ -21,7 +22,7 @@ interface Errors {
 
 const CATEGORY_OPTIONS = CAT_ORDER.map((k) => ({ value: k, label: CAT_SHORT[k] }));
 
-export function EntryForm({ editing, onSubmit, onCancel }: EntryFormProps) {
+export function EntryForm({ editing, onSubmit, onCancel, tripPrefill = null }: EntryFormProps) {
   // Controlled form state (useState) for every input
   const [cat, setCat] = useState<CategoryKey>('travel');
   const [kind, setKind] = useState(categories.travel.options[0].id);
@@ -29,6 +30,31 @@ export function EntryForm({ editing, onSubmit, onCancel }: EntryFormProps) {
   const [date, setDate] = useState(todayStr());
   const [errors, setErrors] = useState<Errors>({});
   const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved: unknown = JSON.parse(sessionStorage.getItem('cfi.draft') ?? 'null');
+      if (typeof saved !== 'object' || saved === null || !('cat' in saved) || !('kind' in saved) || !('amount' in saved)) return;
+      const savedCategoryKey = CAT_ORDER.find((key) => key === saved.cat);
+      if (!savedCategoryKey) return;
+      const savedCategory = categories[savedCategoryKey];
+      if (typeof saved.kind === 'string' && savedCategory.options.some((option) => option.id === saved.kind)) {
+        setCat(savedCategoryKey);
+        setKind(saved.kind);
+      }
+      if (typeof saved.amount === 'string') setAmount(saved.amount);
+    } catch {
+      // The form still works when session storage is disabled.
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('cfi.draft', JSON.stringify({ cat, kind, amount }));
+    } catch {
+      // Some private browsing modes disable session storage.
+    }
+  }, [cat, kind, amount]);
 
   // Fill the form when an entry is chosen for editing
   useEffect(() => {
@@ -39,6 +65,15 @@ export function EntryForm({ editing, onSubmit, onCancel }: EntryFormProps) {
     setDate(editing.date);
     setErrors({});
   }, [editing]);
+
+  useEffect(() => {
+    if (!tripPrefill || editing) return;
+    setCat('travel');
+    setKind(tripPrefill.kind);
+    setAmount(String(tripPrefill.amount));
+    setDate(todayStr());
+    setErrors({});
+  }, [editing, tripPrefill]);
 
   const def = categories[cat];
   const option = def.options.find((o) => o.id === kind) ?? def.options[0];
@@ -99,6 +134,11 @@ export function EntryForm({ editing, onSubmit, onCancel }: EntryFormProps) {
     setSaving(false);
     if (ok && !editing) {
       setAmount(String(def.start)); // ready for the next entry
+      try {
+        sessionStorage.removeItem('cfi.draft');
+      } catch {
+        // The saved draft is optional.
+      }
     }
   }
 
@@ -128,6 +168,13 @@ export function EntryForm({ editing, onSubmit, onCancel }: EntryFormProps) {
               inputMode="decimal"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
+              onPaste={(event) => {
+                const text = event.clipboardData.getData('text');
+                const match = text.replace(/,/g, '').match(/\d+(\.\d+)?/);
+                if (!match) return;
+                event.preventDefault();
+                setAmount(match[0]);
+              }}
               aria-invalid={errors.amount ? true : undefined}
               aria-describedby="amount-error"
             />
@@ -167,6 +214,7 @@ export function EntryForm({ editing, onSubmit, onCancel }: EntryFormProps) {
         <p className="result-context">{context}</p>
         <p className="result-tip">{tip}</p>
       </div>
+      <p className="muted form-hint">Shortcuts: Ctrl+Enter to save · Alt+1–4 to choose a category · paste “12 km” into the amount.</p>
     </form>
   );
 }

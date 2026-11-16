@@ -12,6 +12,13 @@ export function StatsPanel({ analysis: a }: { analysis: Analysis }) {
 
   const ordered = CAT_ORDER.map((k) => [k, a.cats[k]] as const).sort((x, y) => y[1] - x[1]);
   const top = Math.max(...ordered.map((x) => x[1]), 0.0001);
+  let angle = 0;
+  const segments = CAT_ORDER.map((key) => {
+    const start = angle;
+    angle += total > 0 ? (a.cats[key] / total) * 360 : 0;
+    return `${CAT_COLOR[key]} ${start}deg ${angle}deg`;
+  });
+  const donutStyle = { background: total > 0 ? `conic-gradient(${segments.join(', ')})` : 'var(--tint-2)' };
 
   let lead = 'Footprints are lopsided. Seeing the split shows which habit is worth changing first.';
   if (total > 0 && a.prevTotal > 0) {
@@ -87,6 +94,14 @@ export function StatsPanel({ analysis: a }: { analysis: Analysis }) {
       </div>
 
       <div>
+        <div
+          className="category-donut"
+          style={donutStyle}
+          role="img"
+          aria-label={`Last 30 days by category: ${ordered.map(([key, value]) => `${CAT_NAME[key]} ${fmt(value)} kg`).join(', ')}`}
+        >
+          <span>{fmt(total)}<small> kg</small></span>
+        </div>
         <ul ref={catRef} className="cat-list">
           {ordered.map(([key, val]) => (
             <li key={key}>

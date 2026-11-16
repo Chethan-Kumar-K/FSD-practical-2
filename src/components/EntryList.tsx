@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { FootprintEntry } from '../types';
 import { gsap, prefersReducedMotion, useGSAP } from '../lib/gsap';
 import { Button } from './ui/Button';
@@ -14,6 +14,7 @@ interface EntryListProps {
   error: string | null;
   editingId: number | null;
   onEdit: (entry: FootprintEntry) => void;
+  onRepeat: (entry: FootprintEntry) => void;
   onDelete: (id: number) => Promise<boolean>;
   onRetry: () => void;
 }
@@ -26,6 +27,7 @@ export function EntryList({
   error,
   editingId,
   onEdit,
+  onRepeat,
   onDelete,
   onRetry,
 }: EntryListProps) {
@@ -35,6 +37,17 @@ export function EntryList({
 
   const q = query.trim();
   const shown = showAll || q ? entries : entries.slice(0, PAGE);
+
+  useEffect(() => {
+    const showForPrint = () => setShowAll(true);
+    const restoreAfterPrint = () => setShowAll(false);
+    window.addEventListener('beforeprint', showForPrint);
+    window.addEventListener('afterprint', restoreAfterPrint);
+    return () => {
+      window.removeEventListener('beforeprint', showForPrint);
+      window.removeEventListener('afterprint', restoreAfterPrint);
+    };
+  }, []);
 
   // Animate rows the first time they appear: a stagger on load, a flash for new records
   useGSAP(
@@ -88,7 +101,7 @@ export function EntryList({
 
       <ul ref={listRef} className="entry-list" aria-label="Logged activities, newest first">
         {shown.map((e) => (
-          <EntryRow key={e.id} entry={e} editing={e.id === editingId} onEdit={onEdit} onDelete={onDelete} />
+          <EntryRow key={e.id} entry={e} editing={e.id === editingId} onEdit={onEdit} onRepeat={onRepeat} onDelete={onDelete} />
         ))}
       </ul>
 

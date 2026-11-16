@@ -1969,6 +1969,16 @@
       "unit": "meals",
       "kg": 1.2,
       "id": 198
+    },
+    {
+      "date": "2026-11-16",
+      "cat": "travel",
+      "kind": "metro",
+      "label": "Metro",
+      "amount": 10,
+      "unit": "km",
+      "kg": 0.4,
+      "id": 199
     }
   ]
 }

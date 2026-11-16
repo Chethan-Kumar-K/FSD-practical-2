@@ -7,6 +7,7 @@ const LINKS = [
   { href: '#activities', label: 'Log Activity' },
   { href: '#log', label: 'My Log' },
   { href: '#insights', label: 'Insights' },
+  { href: '#pledges', label: 'Pledges' },
 ];
 
 interface HeaderProps {

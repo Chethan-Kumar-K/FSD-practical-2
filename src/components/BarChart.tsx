@@ -76,6 +76,25 @@ export function BarChart({ analysis }: { analysis: Analysis }) {
         ))}
       </div>
       <p className="readout">{readout}</p>
+      <details className="chart-table-details">
+        <summary>View the same data as a table</summary>
+        <div className="table-scroll">
+          <table className="chart-table">
+            <thead>
+              <tr><th>Day</th><th>kg CO₂e</th><th>Against budget</th></tr>
+            </thead>
+            <tbody>
+              {values.map((value, index) => (
+                <tr key={labels[index]}>
+                  <th scope="row">{niceDate(labels[index], true)}</th>
+                  <td>{fmt(value)}</td>
+                  <td>{value > DAILY_BUDGET ? `${fmt(value - DAILY_BUDGET)} kg over` : 'Within budget'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </details>
     </figure>
   );
 }

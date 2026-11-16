@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import type { EntryInput, FootprintEntry } from './types';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { EntryInput, FootprintEntry, Pledge } from './types';
 import { useEntries } from './hooks/useEntries';
-import { analyse } from './utils/analysis';
-import { CAT_NAME } from './data/catalogue';
+import { useAnalysis } from './hooks/useAnalysis';
+import { CAT_NAME, DAILY_BUDGET, buildEntry } from './data/catalogue';
 import { amountText, fmt, niceDate, todayStr } from './utils/format';
 import { gsap, prefersReducedMotion } from './lib/gsap';
 import { Header } from './components/Header';
@@ -16,6 +16,12 @@ import { Recommendations } from './components/Recommendations';
 import { Footer } from './components/Footer';
 import { Toast, type ToastMessage } from './components/Toast';
 import { Reveal } from './components/ui/Reveal';
+import { DataTools } from './components/DataTools';
+import { ProgressPanel } from './components/ProgressPanel';
+import { TripTracker } from './components/TripTracker';
+import { DailyReminder } from './components/DailyReminder';
+import { ScrollProgress } from './components/ScrollProgress';
+import { ApiSupport } from './components/ApiSupport';
 
 function initialDark(): boolean {
   try {
@@ -27,21 +33,68 @@ function initialDark(): boolean {
   return window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
+function initialPledges(): Pledge[] {
+  try {
+    const saved: unknown = JSON.parse(localStorage.getItem('cfi.pledges') ?? '[]');
+    if (!Array.isArray(saved)) return [];
+    return saved.filter(
+      (pledge): pledge is Pledge =>
+        typeof pledge === 'object' &&
+        pledge !== null &&
+        'id' in pledge &&
+        'title' in pledge &&
+        'saving' in pledge &&
+        typeof pledge.id === 'string' &&
+        typeof pledge.title === 'string' &&
+        Number.isFinite(pledge.saving) &&
+        pledge.saving >= 0,
+    );
+  } catch {
+    return [];
+  }
+}
+
 export default function App() {
-  const { entries, loading, error, reload, add, update, remove } = useEntries();
+  const { entries, loading, error, reload, add, update, remove, addMany, clearAll } = useEntries();
   const [query, setQuery] = useState('');
   const [editing, setEditing] = useState<FootprintEntry | null>(null);
   const [toast, setToast] = useState<ToastMessage | null>(null);
   const [dark, setDark] = useState(initialDark);
+  const [pledges, setPledges] = useState<Pledge[]>(initialPledges);
+  const [undoEntry, setUndoEntry] = useState<FootprintEntry | null>(null);
+  const [tripPrefill, setTripPrefill] = useState<{ kind: string; amount: number; version: number } | null>(null);
+  const [today, setToday] = useState(todayStr);
+  const printQuery = useRef('');
 
   useEffect(() => {
     document.documentElement.dataset.theme = dark ? 'dark' : 'light';
-    try {
-      localStorage.setItem('cfi.theme', dark ? 'dark' : 'light');
-    } catch {
-      /* storage blocked */
-    }
   }, [dark]);
+
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const onChange = (event: MediaQueryListEvent) => {
+      try {
+        if (!localStorage.getItem('cfi.theme')) setDark(event.matches);
+      } catch {
+        setDark(event.matches);
+      }
+    };
+    media.addEventListener('change', onChange);
+    return () => media.removeEventListener('change', onChange);
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setToday(todayStr()), 60000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!tripPrefill) return;
+    const target = document.getElementById('activities');
+    if (prefersReducedMotion()) target?.scrollIntoView();
+    else gsap.to(window, { duration: 0.8, ease: 'power3.inOut', scrollTo: { y: '#activities', offsetY: 72 } });
+    document.getElementById('amount')?.focus({ preventScroll: true });
+  }, [tripPrefill]);
 
   useEffect(() => {
     if (!toast) return;
@@ -50,6 +103,18 @@ export default function App() {
   }, [toast]);
 
   const notify = useCallback((text: string) => setToast({ id: Date.now(), text }), []);
+  const { analysis, mode: analysisMode } = useAnalysis(entries, today);
+  const toggleTheme = useCallback(() => {
+    setDark((current) => {
+      const next = !current;
+      try {
+        localStorage.setItem('cfi.theme', next ? 'dark' : 'light');
+      } catch {
+        notify('Theme changed, but this browser could not save the preference.');
+      }
+      return next;
+    });
+  }, [notify]);
 
   // Newest first, then filtered by the search box
   const sorted = useMemo(() => [...entries].sort((a, b) => b.date.localeCompare(a.date) || b.id - a.id), [entries]);
@@ -61,9 +126,10 @@ export default function App() {
     );
   }, [sorted, query]);
 
-  const analysis = useMemo(() => analyse(entries, todayStr()), [entries]);
-
   async function handleSubmit(input: EntryInput): Promise<boolean> {
+    const todayTotal = input.date === today
+      ? entries.reduce((sum, entry) => (entry.date === today ? sum + entry.kg : sum), 0)
+      : 0;
     try {
       if (editing) {
         await update(editing.id, input);
@@ -72,6 +138,18 @@ export default function App() {
       } else {
         await add(input);
         notify(`Added ${input.label}, ${amountText(input.amount, input.unit)}: ${fmt(input.kg)} kg CO₂e.`);
+        if (input.date === today && todayTotal <= DAILY_BUDGET && todayTotal + input.kg > DAILY_BUDGET) {
+          const message = `Today is at ${fmt(todayTotal + input.kg)} kg, over the ${DAILY_BUDGET} kg daily budget.`;
+          if ('Notification' in window && Notification.permission === 'granted') {
+            try {
+              new Notification('Over today’s carbon budget', { body: message, tag: 'budget-alert' });
+            } catch {
+              notify(message);
+            }
+          } else {
+            notify(message);
+          }
+        }
       }
       return true;
     } catch {
@@ -81,15 +159,57 @@ export default function App() {
   }
 
   async function handleDelete(id: number): Promise<boolean> {
+    const target = entries.find((entry) => entry.id === id);
     try {
       await remove(id);
       if (editing?.id === id) setEditing(null);
-      notify('Entry deleted.');
+      if (target) setUndoEntry(target);
+      notify('Entry deleted. Press Ctrl+Z to undo.');
       return true;
     } catch {
       notify('Could not delete. Is JSON Server running on port 3001?');
       return false;
     }
+  }
+
+  async function handleRepeat(entry: FootprintEntry) {
+    try {
+      const repeated = await add(buildEntry(today, entry.kind, entry.amount));
+      notify(`Logged again today: ${repeated.label}, ${amountText(repeated.amount, repeated.unit)}.`);
+    } catch {
+      notify('Could not repeat this activity. Is JSON Server running on port 3001?');
+    }
+  }
+
+  async function handleUndo() {
+    if (!undoEntry) return;
+    try {
+      const restored = await add(buildEntry(undoEntry.date, undoEntry.kind, undoEntry.amount));
+      setUndoEntry(null);
+      notify(`${restored.label} restored.`);
+    } catch {
+      notify('Could not restore the entry. Is JSON Server running on port 3001?');
+    }
+  }
+
+  function savePledges(next: Pledge[]) {
+    setPledges(next);
+    try {
+      localStorage.setItem('cfi.pledges', JSON.stringify(next));
+    } catch {
+      notify('Pledges changed, but this browser could not save them.');
+    }
+  }
+
+  function addPledge(pledge: Pledge) {
+    if (pledges.some((item) => item.id === pledge.id)) return;
+    savePledges([...pledges, pledge]);
+    notify(`Pledged: ${pledge.title}`);
+  }
+
+  function removePledge(id: string) {
+    savePledges(pledges.filter((pledge) => pledge.id !== id));
+    notify('Removed from pledges.');
   }
 
   function handleEdit(entry: FootprintEntry) {
@@ -99,9 +219,86 @@ export default function App() {
     else gsap.to(window, { duration: 0.8, ease: 'power3.inOut', scrollTo: { y: '#activities', offsetY: 72 } });
   }
 
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      const target = event.target;
+      const typing = target instanceof HTMLElement && target.matches('input, textarea, select, [contenteditable="true"]');
+      if ((event.ctrlKey || event.metaKey) && event.key === 'Enter' && target instanceof Node && document.getElementById('activities')?.contains(target)) {
+        event.preventDefault();
+        document.querySelector<HTMLFormElement>('.estimator')?.requestSubmit();
+      } else if (event.altKey && /^Digit[1-4]$/.test(event.code)) {
+        event.preventDefault();
+        document.querySelector<HTMLInputElement>(`input[name="category"][value="${['travel', 'energy', 'food', 'shopping'][Number(event.code.slice(5)) - 1]}"]`)?.click();
+      } else if (event.key === '/' && !typing && !event.ctrlKey && !event.metaKey) {
+        event.preventDefault();
+        document.getElementById('amount')?.focus();
+        document.getElementById('activities')?.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'center' });
+      } else if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z' && !typing && undoEntry) {
+        event.preventDefault();
+        void handleUndo();
+      }
+    }
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [undoEntry, handleUndo]);
+
+  useEffect(() => {
+    const offline = () => notify('You are offline. Changes require a connection to JSON Server.');
+    const online = () => notify('Back online.');
+    window.addEventListener('offline', offline);
+    window.addEventListener('online', online);
+    return () => {
+      window.removeEventListener('offline', offline);
+      window.removeEventListener('online', online);
+    };
+  }, [notify]);
+
+  useEffect(() => {
+    const receipt = document.querySelector<HTMLElement>('.receipt-paper');
+    if (!receipt) return;
+    const onCopy = (event: ClipboardEvent) => {
+      const selection = String(document.getSelection());
+      if (!selection || !event.clipboardData) return;
+      event.preventDefault();
+      event.clipboardData.setData('text/plain', `${selection}\n— CarbonFootprint India, ${niceDate(today)}`);
+      notify('Receipt text copied with a source line.');
+    };
+    receipt.addEventListener('copy', onCopy);
+    return () => receipt.removeEventListener('copy', onCopy);
+  }, [today, notify]);
+
+  useEffect(() => {
+    const names: Record<string, string> = {
+      home: 'Dashboard', activities: 'Log Activity', log: 'My Log', insights: 'Insights', pledges: 'Pledges', about: 'About',
+    };
+    const updateTitle = () => {
+      document.title = `CarbonFootprint India | ${names[window.location.hash.slice(1)] ?? 'Dashboard'}`;
+    };
+    window.addEventListener('hashchange', updateTitle);
+    updateTitle();
+    return () => window.removeEventListener('hashchange', updateTitle);
+  }, []);
+
+  useEffect(() => {
+    const beforePrint = () => {
+      printQuery.current = query;
+      setQuery('');
+    };
+    const afterPrint = () => setQuery(printQuery.current);
+    window.addEventListener('beforeprint', beforePrint);
+    window.addEventListener('afterprint', afterPrint);
+    return () => {
+      window.removeEventListener('beforeprint', beforePrint);
+      window.removeEventListener('afterprint', afterPrint);
+    };
+  }, [query]);
+
+  const hasLoggedToday = entries.some((entry) => entry.date === today);
+
   return (
     <>
-      <Header dark={dark} onToggleTheme={() => setDark((d) => !d)} />
+      <ScrollProgress />
+      <Header dark={dark} onToggleTheme={toggleTheme} />
       <main id="main">
         <Hero entries={entries} />
 
@@ -115,26 +312,43 @@ export default function App() {
               </p>
               <p className="muted">Emission factors here are illustrative. A production version would use verified figures.</p>
             </div>
-            <EntryForm editing={editing} onSubmit={handleSubmit} onCancel={() => setEditing(null)} />
+            <EntryForm editing={editing} onSubmit={handleSubmit} onCancel={() => setEditing(null)} tripPrefill={tripPrefill} />
+          </Reveal>
+          <Reveal className="container feature-grid">
+            <TripTracker onUseTrip={(kind, amount) => setTripPrefill({ kind, amount, version: Date.now() })} />
+            <DailyReminder hasLoggedToday={hasLoggedToday} onNotify={notify} />
           </Reveal>
         </section>
 
         <section id="log" className="section section-tint">
-          <Reveal className="container">
-            <div className="log-head">
-              <h2 className="section-title">Your activity log</h2>
-              <SearchBar value={query} onChange={setQuery} />
+          <Reveal className="container log-layout">
+            <div className="log-main">
+              <div className="log-head">
+                <h2 className="section-title">Your activity log</h2>
+                <SearchBar value={query} onChange={setQuery} />
+              </div>
+              <EntryList
+                entries={visible}
+                totalCount={entries.length}
+                query={query}
+                loading={loading}
+                error={error}
+                editingId={editing?.id ?? null}
+                onEdit={handleEdit}
+                onRepeat={handleRepeat}
+                onDelete={handleDelete}
+                onRetry={reload}
+              />
             </div>
-            <EntryList
-              entries={visible}
-              totalCount={entries.length}
-              query={query}
-              loading={loading}
-              error={error}
-              editingId={editing?.id ?? null}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-              onRetry={reload}
+            <DataTools
+              entries={entries}
+              analysis={analysis}
+              pledges={pledges}
+              onImport={addMany}
+              onImportPledges={(imported) => savePledges([...pledges, ...imported])}
+              onClear={clearAll}
+              onClearPledges={() => savePledges([])}
+              onNotify={notify}
             />
           </Reveal>
         </section>
@@ -144,10 +358,20 @@ export default function App() {
             <StatsPanel analysis={analysis} />
           </Reveal>
           <Reveal className="container">
-            <BarChart analysis={analysis} />
+            <ProgressPanel entries={entries} previousTotal={analysis.prevTotal} monthTotal={analysis.monthTotal} />
           </Reveal>
           <Reveal className="container">
-            <Recommendations recs={analysis.recs} />
+            <BarChart analysis={analysis} />
+          </Reveal>
+        </section>
+        <section id="pledges" className="section section-tint">
+          <Reveal className="container">
+            <Recommendations recs={analysis.recs} pledges={pledges} onAdd={addPledge} onRemove={removePledge} />
+          </Reveal>
+        </section>
+        <section id="browser-features" className="section">
+          <Reveal className="container">
+            <ApiSupport analysisMode={analysisMode} />
           </Reveal>
         </section>
       </main>

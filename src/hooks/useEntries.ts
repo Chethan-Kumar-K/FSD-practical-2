@@ -42,5 +42,32 @@ export function useEntries() {
     setEntries((prev) => prev.filter((e) => e.id !== id));
   }, []);
 
-  return { entries, loading, error, reload: load, add, update, remove };
+  const addMany = useCallback(async (inputs: EntryInput[]) => {
+    try {
+      const created: FootprintEntry[] = [];
+      for (let offset = 0; offset < inputs.length; offset += 25) {
+        const batch = inputs.slice(offset, offset + 25);
+        created.push(...(await Promise.all(batch.map((input) => api.createEntry(input)))));
+      }
+      setEntries((prev) => [...prev, ...created]);
+      return created.length;
+    } catch (cause) {
+      await load();
+      throw cause;
+    }
+  }, [load]);
+
+  const clearAll = useCallback(async () => {
+    try {
+      for (let offset = 0; offset < entries.length; offset += 25) {
+        await Promise.all(entries.slice(offset, offset + 25).map((entry) => api.deleteEntry(entry.id)));
+      }
+      setEntries([]);
+    } catch (cause) {
+      await load();
+      throw cause;
+    }
+  }, [entries, load]);
+
+  return { entries, loading, error, reload: load, add, update, remove, addMany, clearAll };
 }

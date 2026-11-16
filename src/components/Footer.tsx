@@ -16,6 +16,12 @@ export function Footer() {
               <a href="#insights">Insights</a>
             </li>
             <li>
+              <a href="#pledges">Pledges</a>
+            </li>
+            <li>
+              <a href="#browser-features">Browser compatibility</a>
+            </li>
+            <li>
               <a href="#home">Back to top</a>
             </li>
           </ul>

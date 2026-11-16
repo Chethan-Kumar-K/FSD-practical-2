@@ -39,6 +39,12 @@ export interface Recommendation {
   saving: number;
 }
 
+export interface Pledge {
+  id: string;
+  title: string;
+  saving: number;
+}
+
 export interface Analysis {
   today: string;
   cats: Record<CategoryKey, number>;
