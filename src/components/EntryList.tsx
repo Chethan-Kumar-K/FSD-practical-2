@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import type { FootprintEntry } from '../types';
+import type { CategoryKey, FootprintEntry } from '../types';
+import { CAT_COLOR, CAT_ORDER, CAT_SHORT } from '../data/catalogue';
 import { gsap, prefersReducedMotion, useGSAP } from '../lib/gsap';
 import { Button } from './ui/Button';
 import { EntryRow } from './EntryRow';
@@ -32,11 +33,15 @@ export function EntryList({
   onRetry,
 }: EntryListProps) {
   const [showAll, setShowAll] = useState(false);
+  const [cat, setCat] = useState<CategoryKey | 'all'>('all');
   const listRef = useRef<HTMLUListElement>(null);
   const seen = useRef<Set<string>>(new Set());
 
   const q = query.trim();
-  const shown = showAll || q ? entries : entries.slice(0, PAGE);
+  const counts = CAT_ORDER.map((k) => [k, entries.filter((e) => e.cat === k).length] as const);
+  const visible = cat === 'all' ? entries : entries.filter((e) => e.cat === cat);
+  const filtering = Boolean(q) || cat !== 'all';
+  const shown = showAll || filtering ? visible : visible.slice(0, PAGE);
 
   useEffect(() => {
     const showForPrint = () => setShowAll(true);
@@ -87,17 +92,45 @@ export function EntryList({
   }
   if (loading) return <p className="notice">Loading your log…</p>;
 
+  const kgTotal = Math.round(visible.reduce((sum, e) => sum + e.kg, 0)).toLocaleString('en-IN');
+  const catName = cat === 'all' ? '' : CAT_SHORT[cat];
+
   return (
     <>
-      <p className="log-summary">
+      {totalCount > 0 && (
+        <div className="chip-row" role="group" aria-label="Filter the log by category">
+          <button type="button" className="chip" aria-pressed={cat === 'all'} onClick={() => setCat('all')}>
+            All <span className="chip-count">{entries.length}</span>
+          </button>
+          {counts.map(([k, n]) => (
+            <button
+              key={k}
+              type="button"
+              className="chip"
+              aria-pressed={cat === k}
+              disabled={n === 0 && cat !== k}
+              onClick={() => setCat(cat === k ? 'all' : k)}
+            >
+              <i className="swatch" style={{ background: CAT_COLOR[k] }} aria-hidden="true" />
+              {CAT_SHORT[k]} <span className="chip-count">{n}</span>
+            </button>
+          ))}
+        </div>
+      )}
+
+      <p className="log-summary" aria-live="polite">
         {totalCount === 0
           ? 'No entries yet. Add one above.'
           : q
-            ? `${entries.length} of ${totalCount} entries match “${q}”.`
-            : `${totalCount} entries, ${Math.round(entries.reduce((s, e) => s + e.kg, 0)).toLocaleString('en-IN')} kg CO₂e in total.`}
+            ? `${visible.length} of ${totalCount} entries match “${q}”${catName ? ` in ${catName}` : ''}.`
+            : catName
+              ? `${visible.length} ${catName} entries, ${kgTotal} kg CO₂e.`
+              : `${totalCount} entries, ${kgTotal} kg CO₂e in total.`}
       </p>
 
-      {entries.length === 0 && totalCount > 0 && <p className="notice">No entries match “{q}”.</p>}
+      {visible.length === 0 && totalCount > 0 && (
+        <p className="notice">{q ? `No entries match “${q}”${catName ? ` in ${catName}` : ''}.` : `No ${catName} entries yet.`}</p>
+      )}
 
       <ul ref={listRef} className="entry-list" aria-label="Logged activities, newest first">
         {shown.map((e) => (
@@ -105,9 +138,9 @@ export function EntryList({
         ))}
       </ul>
 
-      {!q && entries.length > PAGE && (
+      {!filtering && visible.length > PAGE && (
         <Button variant="ghost" onClick={() => setShowAll((s) => !s)}>
-          {showAll ? 'Show fewer' : `Show all ${entries.length} entries`}
+          {showAll ? 'Show fewer' : `Show all ${visible.length} entries`}
         </Button>
       )}
     </>

@@ -1,7 +1,7 @@
 import { useRef, useState, type TouchEvent } from 'react';
 import type { FootprintEntry } from '../types';
-import { CAT_NAME } from '../data/catalogue';
-import { amountText, fmt, niceDate } from '../utils/format';
+import { CAT_COLOR, CAT_NAME } from '../data/catalogue';
+import { amountText, fmt, niceDate, shiftDate, todayStr } from '../utils/format';
 import { gsap, prefersReducedMotion } from '../lib/gsap';
 import { Button } from './ui/Button';
 
@@ -61,6 +61,9 @@ export function EntryRow({ entry, editing, onEdit, onRepeat, onDelete }: EntryRo
     setSwipeX(0);
   }
 
+  const today = todayStr();
+  const dayLabel =
+    entry.date === today ? 'Today' : entry.date === shiftDate(today, -1) ? 'Yesterday' : niceDate(entry.date, true);
   const description = `${entry.label}, ${amountText(entry.amount, entry.unit)}, ${niceDate(entry.date)}`;
 
   return (
@@ -69,7 +72,11 @@ export function EntryRow({ entry, editing, onEdit, onRepeat, onDelete }: EntryRo
       className={'entry-row' + (editing ? ' is-editing' : '')}
       data-row
       data-id={entry.id}
-      style={{ transform: `translateX(${swipeX}px)`, opacity: Math.max(0.35, 1 + swipeX / 250) }}
+      style={{
+        transform: swipeX ? `translateX(${swipeX}px)` : undefined,
+        opacity: swipeX ? Math.max(0.35, 1 + swipeX / 250) : undefined,
+        ['--cat' as string]: CAT_COLOR[entry.cat],
+      }}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
@@ -79,8 +86,8 @@ export function EntryRow({ entry, editing, onEdit, onRepeat, onDelete }: EntryRo
       }}
       title="Double-click to log this again today"
     >
-      <time className="entry-date" dateTime={entry.date}>
-        {niceDate(entry.date, true)}
+      <time className="entry-date" dateTime={entry.date} title={niceDate(entry.date, true)}>
+        {dayLabel}
       </time>
       <div className="entry-main">
         <p className="entry-label">{entry.label}</p>
@@ -92,13 +99,13 @@ export function EntryRow({ entry, editing, onEdit, onRepeat, onDelete }: EntryRo
         {fmt(entry.kg)} <small>kg</small>
       </p>
       <div className="entry-actions">
-        <Button variant="outline" small onClick={() => onRepeat(entry)} aria-label={`Log ${description} again today`}>
+        <Button variant="outline" small className="act" onClick={() => onRepeat(entry)} aria-label={`Log ${description} again today`}>
           Repeat
         </Button>
-        <Button variant="outline" small onClick={() => onEdit(entry)} aria-label={`Edit ${description}`}>
+        <Button variant="outline" small className="act" onClick={() => onEdit(entry)} aria-label={`Edit ${description}`}>
           Edit
         </Button>
-        <Button variant="danger" small onClick={handleDelete} aria-label={`Delete ${description}`}>
+        <Button variant="danger" small className="act" onClick={handleDelete} aria-label={`Delete ${description}`}>
           Delete
         </Button>
       </div>

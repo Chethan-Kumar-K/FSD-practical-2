@@ -14,6 +14,7 @@ export function BarChart({ analysis }: { analysis: Analysis }) {
 
   const values = range === 14 ? analysis.byDay14 : analysis.byDay30;
   const labels = values.map((_, i) => shiftDate(analysis.today, i - (values.length - 1)));
+  const logged = values.reduce((a, b) => a + b, 0);
   const maxV = Math.max(DAILY_BUDGET * 1.3, ...values);
 
   // Bars grow up from the baseline whenever the data or range changes
@@ -63,7 +64,7 @@ export function BarChart({ analysis }: { analysis: Analysis }) {
           >
             <div className="bar-track">
               <div
-                className={'bar' + (v > DAILY_BUDGET ? ' over' : '')}
+                className={'bar' + (v > DAILY_BUDGET ? ' over' : '') + (v === 0 ? ' zero' : '')}
                 style={{ height: `${(v / maxV) * 100}%` }}
                 role="img"
                 aria-label={`${niceDate(labels[i], true)}: ${fmt(v)} kg`}
@@ -75,7 +76,12 @@ export function BarChart({ analysis }: { analysis: Analysis }) {
           </div>
         ))}
       </div>
-      <p className="readout">{readout}</p>
+      {logged === 0 && (
+        <p className="chart-empty">
+          Nothing logged in the last {range} days, so every bar is empty. Add an activity with today’s date to see it here.
+        </p>
+      )}
+      <p className="readout" aria-live="polite">{readout}</p>
       <details className="chart-table-details">
         <summary>View the same data as a table</summary>
         <div className="table-scroll">
