@@ -34,6 +34,7 @@ export function EntryList({
 }: EntryListProps) {
   const [showAll, setShowAll] = useState(false);
   const [cat, setCat] = useState<CategoryKey | 'all'>('all');
+  const [sort, setSort] = useState<'newest' | 'oldest' | 'highest'>('newest');
   const listRef = useRef<HTMLUListElement>(null);
   const seen = useRef<Set<string>>(new Set());
 
@@ -41,7 +42,12 @@ export function EntryList({
   const counts = CAT_ORDER.map((k) => [k, entries.filter((e) => e.cat === k).length] as const);
   const visible = cat === 'all' ? entries : entries.filter((e) => e.cat === cat);
   const filtering = Boolean(q) || cat !== 'all';
-  const shown = showAll || filtering ? visible : visible.slice(0, PAGE);
+  const ordered = [...visible].sort((a, b) => {
+    if (sort === 'oldest') return a.date.localeCompare(b.date) || a.id - b.id;
+    if (sort === 'highest') return b.kg - a.kg || b.date.localeCompare(a.date);
+    return b.date.localeCompare(a.date) || b.id - a.id;
+  });
+  const shown = showAll || filtering ? ordered : ordered.slice(0, PAGE);
 
   useEffect(() => {
     const showForPrint = () => setShowAll(true);
@@ -127,6 +133,17 @@ export function EntryList({
               ? `${visible.length} ${catName} entries, ${kgTotal} kg CO₂e.`
               : `${totalCount} entries, ${kgTotal} kg CO₂e in total.`}
       </p>
+
+      {visible.length > 1 && (
+        <div className="log-controls">
+          <label htmlFor="log-sort">Sort by</label>
+          <select id="log-sort" value={sort} onChange={(event) => setSort(event.target.value as typeof sort)}>
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="highest">Highest impact</option>
+          </select>
+        </div>
+      )}
 
       {visible.length === 0 && totalCount > 0 && (
         <p className="notice">{q ? `No entries match “${q}”${catName ? ` in ${catName}` : ''}.` : `No ${catName} entries yet.`}</p>

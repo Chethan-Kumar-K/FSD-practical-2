@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap, prefersReducedMotion, useGSAP } from '../lib/gsap';
 import { Button } from './ui/Button';
 
@@ -17,7 +17,21 @@ interface HeaderProps {
 
 export function Header({ dark, onToggleTheme }: HeaderProps) {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState('#home');
   const ref = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const sections = LINKS.map((link) => document.querySelector(link.href)).filter(Boolean) as HTMLElement[];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (current) setActive(`#${current.target.id}`);
+      },
+      { rootMargin: '-20% 0px -65% 0px', threshold: [0.2, 0.5] },
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
 
   // Header slides in once on load
   useGSAP(
@@ -59,7 +73,7 @@ export function Header({ dark, onToggleTheme }: HeaderProps) {
           <ul className="nav-list">
             {LINKS.map((l) => (
               <li key={l.href}>
-                <a href={l.href} onClick={() => setOpen(false)}>
+                  <a href={l.href} className={active === l.href ? 'is-active' : undefined} aria-current={active === l.href ? 'page' : undefined} onClick={() => setOpen(false)}>
                   {l.label}
                 </a>
               </li>

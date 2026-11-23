@@ -22,6 +22,8 @@ import { ProgressPanel } from './components/ProgressPanel';
 import { TripTracker } from './components/TripTracker';
 import { DailyReminder } from './components/DailyReminder';
 import { ScrollProgress } from './components/ScrollProgress';
+import { DashboardSummary } from './components/DashboardSummary';
+import { MobileBottomNav } from './components/MobileBottomNav';
 
 function initialDark(): boolean {
   try {
@@ -280,6 +282,12 @@ export default function App() {
       <main id="main">
         <Hero entries={entries} />
 
+        <section className="section summary-section" aria-label="Footprint summary">
+          <Reveal className="container">
+            <DashboardSummary analysis={analysis} entries={entries} />
+          </Reveal>
+        </section>
+
         <section id="activities" className="section">
           <Reveal className="container split">
             <div className="intro">
@@ -349,6 +357,7 @@ export default function App() {
         </section>
       </main>
       <Footer />
+      <MobileBottomNav />
       <Toast message={toast} />
     </>
   );

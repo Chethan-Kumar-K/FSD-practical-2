@@ -1,10 +1,11 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import type { CategoryKey, EntryInput, FootprintEntry } from '../types';
 import { CAT_ORDER, CAT_SHORT, DAILY_BUDGET, buildEntry, categories } from '../data/catalogue';
 import { fmt, lowerFirst, shiftDate, todayStr } from '../utils/format';
 import { Button } from './ui/Button';
 import { FormField } from './ui/FormField';
 import { RadioGroup } from './ui/RadioGroup';
+import { gsap, prefersReducedMotion, useGSAP } from '../lib/gsap';
 
 interface EntryFormProps {
   /** When set, the form edits this record (Update). Otherwise it creates one. */
@@ -23,6 +24,7 @@ interface Errors {
 const CATEGORY_OPTIONS = CAT_ORDER.map((k) => ({ value: k, label: CAT_SHORT[k] }));
 
 export function EntryForm({ editing, onSubmit, onCancel, tripPrefill = null }: EntryFormProps) {
+  const formRef = useRef<HTMLFormElement>(null);
   // Controlled form state (useState) for every input
   const [cat, setCat] = useState<CategoryKey>('travel');
   const [kind, setKind] = useState(categories.travel.options[0].id);
@@ -123,6 +125,11 @@ export function EntryForm({ editing, onSubmit, onCancel, tripPrefill = null }: E
     } else tip = def.note ?? '';
   }
 
+  useGSAP(() => {
+    if (!valid || prefersReducedMotion()) return;
+    gsap.fromTo('[data-estimate]', { y: 8, autoAlpha: 0.55 }, { y: 0, autoAlpha: 1, duration: 0.28, ease: 'power2.out', clearProps: 'transform,opacity,visibility' });
+  }, { scope: formRef, dependencies: [kg, valid] });
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const found = validate();
@@ -143,8 +150,14 @@ export function EntryForm({ editing, onSubmit, onCancel, tripPrefill = null }: E
   }
 
   return (
-    <form className="card estimator" onSubmit={handleSubmit} noValidate>
+    <form ref={formRef} className="card estimator" onSubmit={handleSubmit} noValidate>
+      <div className="form-kicker"><span>{editing ? 'Updating your record' : 'Quick capture'}</span><span className="form-step-count">1—3</span></div>
       <h3 className="form-title">{editing ? 'Edit entry' : 'New entry'}</h3>
+      <ol className="form-steps" aria-label="Entry steps">
+        <li className="is-current"><span>01</span> Choose a category</li>
+        <li><span>02</span> Describe it</li>
+        <li><span>03</span> See the impact</li>
+      </ol>
 
       <RadioGroup legend="Category" name="category" value={cat} options={CATEGORY_OPTIONS} onChange={changeCategory} />
 
@@ -207,7 +220,7 @@ export function EntryForm({ editing, onSubmit, onCancel, tripPrefill = null }: E
         </div>
       </div>
 
-      <div className="result" aria-live="polite">
+      <div className="result" data-estimate aria-live="polite">
         <p className="result-num">
           {fmt(kg)} <small>kg CO₂e</small>
         </p>
