@@ -60,12 +60,27 @@ export function Hero({ entries }: HeroProps) {
         ease: 'none',
         scrollTrigger: scrollRange,
       });
+      gsap.to('.hero-grid-plane', { yPercent: 12, rotation: 3, ease: 'none', scrollTrigger: scrollRange });
+      gsap.to('.hero-contour-a', { xPercent: -10, yPercent: 18, rotation: -5, ease: 'none', scrollTrigger: scrollRange });
+      gsap.to('.hero-contour-b', { xPercent: 14, yPercent: -12, rotation: 4, ease: 'none', scrollTrigger: scrollRange });
+      gsap.to('.hero-data-point-a, .hero-data-point-c', { yPercent: -26, ease: 'none', scrollTrigger: scrollRange });
+      gsap.to('.hero-data-point-b', { yPercent: 22, xPercent: -18, ease: 'none', scrollTrigger: scrollRange });
     },
     { scope: root },
   );
 
   return (
     <section id="home" ref={root} className="hero on-dark">
+      <div className="hero-world" aria-hidden="true">
+        <div className="hero-halo hero-halo-gold" />
+        <div className="hero-halo hero-halo-teal" />
+        <div className="hero-grid-plane" />
+        <div className="hero-contour hero-contour-a" />
+        <div className="hero-contour hero-contour-b" />
+        <span className="hero-data-point hero-data-point-a">CO₂ / LIVE</span>
+        <span className="hero-data-point hero-data-point-b">{fmt(total)} kg</span>
+        <span className="hero-data-point hero-data-point-c">{lines.length} lines</span>
+      </div>
       <div className="container hero-grid">
         <div className="hero-copy">
           <h1 aria-label={HEADLINE}>

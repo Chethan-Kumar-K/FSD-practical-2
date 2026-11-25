@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { CarbonStory } from './components/CarbonStory';
 import type { EntryInput, FootprintEntry, Pledge } from './types';
 import { useEntries } from './hooks/useEntries';
 import { useAnalysis } from './hooks/useAnalysis';
@@ -281,6 +282,7 @@ export default function App() {
       <Header dark={dark} onToggleTheme={toggleTheme} />
       <main id="main">
         <Hero entries={entries} />
+        <CarbonStory analysis={analysis} entries={entries} />
 
         <section className="section summary-section" aria-label="Footprint summary">
           <Reveal className="container">
