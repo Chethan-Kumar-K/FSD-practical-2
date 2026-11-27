@@ -26,8 +26,8 @@ export function Footer() {
         <div>
           <h3>About the numbers</h3>
           <p>
-            Emission factors are illustrative values for this exercise. Records are stored in a SQLite database,
-            <code> data/carbon.db</code>.
+            Emission factors are illustrative values for this exercise. Records are stored in a MongoDB database
+            (<code>carbonfootprint</code>).
           </p>
         </div>
       </div>

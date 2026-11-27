@@ -70,10 +70,10 @@ export function CarbonStory({ analysis, entries }: CarbonStoryProps) {
 
         const sequence = gsap.timeline({
           scrollTrigger: {
-            trigger: root.current,
+            trigger: desktop ? pin.current : root.current,
             pin: desktop ? pin.current : false,
-            start: 'top top',
-            end: desktop ? '+=1700' : '+=950',
+            start: desktop ? 'top 96px' : 'top top',
+            end: desktop ? '+=1000' : '+=950',
             scrub: 0.75,
             invalidateOnRefresh: true,
           },

@@ -7,7 +7,7 @@
     "dev": "vite",
     "server": "node server/index.js",
     "start": "concurrently -k -n api,web \"npm:server\" \"npm:dev\"",
-    "seed": "node scripts/seed.mjs",
+    "seed": "node server/seed.js",
     "typecheck": "tsc --noEmit",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
@@ -15,9 +15,9 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
-    "better-sqlite3": "^13.2.0",
     "express": "^5.3.0",
     "gsap": "^3.15.0",
+    "mongodb": "^7.9.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },

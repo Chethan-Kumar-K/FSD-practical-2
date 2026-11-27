@@ -1,19 +1,21 @@
 # CarbonFootprint India (React + TypeScript + GSAP)
 
-Lab Exercises 5 & 6, Part 2. The Part 1 module (HTML, CSS, JavaScript) rebuilt in React with TypeScript, GSAP animations and full CRUD through an **Express API backed by SQLite**.
+Lab Exercises 5 & 6, Part 2. The Part 1 module (HTML, CSS, JavaScript) rebuilt in React with TypeScript, GSAP animations and full CRUD through an **Express API backed by MongoDB**.
 
 ## Run it
 
 ```bash
 npm install
-npm start          # Express + SQLite API on :3001 and Vite on :5173 together
+npm start          # Express + MongoDB API on :3001 and Vite on :5173 together
 ```
+
+You need a MongoDB to connect to: a local `mongod` on the default port (nothing to configure), or a free [MongoDB Atlas](https://www.mongodb.com/atlas) cluster. For Atlas, copy `.env.example` to `.env` and put your connection string in `MONGODB_URI`.
 
 Or in two terminals: `npm run server` and `npm run dev`. Open http://localhost:5173.
 
-- `npm run seed` replaces the entries in the SQLite database with 60 days of sample data ending today.
-- `npm run test:api` runs the CRUD checks against an in-memory SQLite database.
-- The database file is `data/carbon.db` (git-ignored). On the very first run the server imports the entries from `db.json` if that file exists, otherwise it adds sample data.
+- `npm run seed` replaces the entries in the MongoDB database with 60 days of sample data ending today.
+- `npm run test:api` runs the CRUD checks against a throw-away MongoDB database (created and dropped by the test).
+- The database is `carbonfootprint` (set `MONGODB_DB` to change it). On the very first run, when nothing has been stored yet, the server imports the entries from `db.json` if that file exists, otherwise it adds sample data.
 - `npm run build` type-checks and creates a production build in `dist/`.
 - To point at another API, create `.env` with `VITE_API_URL=http://host:port`.
 
@@ -44,7 +46,7 @@ Or in two terminals: `npm run server` and `npm run dev`. Open http://localhost:5
 - **Insights:** donut and category breakdown, 14/30-day bar chart with an accessible table alternative, and calculations in a Web Worker where supported.
 - **Navigation helpers:** reading progress, back-to-top button, session-restored form draft, receipt copy attribution, live document title, and online/offline notices.
 
-Entries, pledges and the daily-reminder settings are all stored in SQLite (`data/carbon.db`) through the API, and the server recalculates kg from the catalogue on every write. Pledges and reminder settings that an earlier version kept in browser local storage are moved into the database the first time the page loads. Only the theme choice and the unsent form draft stay in the browser. JSON imports are capped at 2 MB / 5,000 entries and recalculate emissions from the current catalogue rather than trusting imported totals.
+Entries, pledges and the daily-reminder settings are all stored in MongoDB (collections `entries`, `pledges`, `reminder`) through the API, and the server recalculates kg from the catalogue on every write. Pledges and reminder settings that an earlier version kept in browser local storage are moved into the database the first time the page loads. Only the theme choice and the unsent form draft stay in the browser. JSON imports are capped at 2 MB / 5,000 entries and recalculate emissions from the current catalogue rather than trusting imported totals.
 
 ## GSAP
 
@@ -62,8 +64,8 @@ All plugin registration is in `src/lib/gsap.ts` and every animation uses the `us
 ## Project layout
 
 ```
-server/                 Express API (app.js), SQLite setup (db.js), catalogue, seed
-data/carbon.db          SQLite database (created on first run, git-ignored)
+server/                 Express API (app.js), MongoDB connection (db.js), catalogue, seed
+.env.example            MONGODB_URI and MONGODB_DB (copy to .env)
 db.json                 old JSON Server data, only imported once on first run
 scripts/api-test.mjs    CRUD checks
 src/
@@ -87,8 +89,12 @@ src/
 3. **Update:** click Edit, change the amount, save, screenshot before and after.
 4. **Delete:** delete a row and screenshot the list and toast.
 5. **Bonus search:** type `car` in the search box and screenshot the filtered list.
-6. `data/carbon.db` opened in a SQLite viewer (for example the VS Code SQLite extension) showing the change.
+6. The `entries` collection opened in MongoDB Compass (or Atlas Data Explorer) showing the change.
 
 ## Mobile later (Capacitor)
 
 `npm i @capacitor/core @capacitor/cli`, `npx cap init`, `npm run build`, set `webDir` to `dist`, then `npx cap add android`. Point `VITE_API_URL` at a reachable API host first, since `localhost` on a phone is the phone.
+
+## Moving existing SQLite data to MongoDB
+
+Start the old version, use **Download JSON backup**, then start this version and drop that file on **Import**. Entries, pledges and reminder settings are recalculated and merged without duplicates.

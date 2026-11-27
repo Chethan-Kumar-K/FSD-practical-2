@@ -1,6 +1,6 @@
 export type CategoryKey = 'travel' | 'energy' | 'food' | 'shopping';
 
-/** One logged activity, exactly as stored in the SQLite entries table */
+/** One logged activity, exactly as stored in the MongoDB entries collection */
 export interface FootprintEntry {
   id: number;
   date: string; // local "YYYY-MM-DD"
@@ -12,7 +12,7 @@ export interface FootprintEntry {
   kg: number; // kg CO2e
 }
 
-/** What the form sends to the server (SQLite assigns the id) */
+/** What the form sends to the server (the server assigns the id) */
 export type EntryInput = Omit<FootprintEntry, 'id'>;
 
 export interface CategoryOption {

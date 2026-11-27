@@ -1,9 +1,11 @@
-// CRUD cycle against the real Express app and an in-memory SQLite database.   npm run test:api
+// CRUD cycle against the real Express app and a throw-away MongoDB database (dropped afterwards).   npm run test:api
+// Needs a running MongoDB: a local mongod, or set MONGODB_URI (for example an Atlas cluster).
 import assert from 'node:assert/strict';
-import { openDb } from '../server/db.js';
+import { connectDb } from '../server/db.js';
 import { createApp } from '../server/app.js';
 
-const { db } = openDb(':memory:');
+try { process.loadEnvFile(); } catch { /* no .env file */ }
+const { client, db } = await connectDb({ dbName: `carbon_test_${Date.now()}` }).catch((e) => { console.error(e.message); process.exit(1); });
 const server = createApp(db).listen(0);
 const base = `http://127.0.0.1:${server.address().port}`;
 const call = async (method, url, body) => {
@@ -39,4 +41,4 @@ try {
   r = await call('GET', '/reminder'); assert.deepEqual(r.body, { enabled: true, time: '07:45', lastFired: today, saved: true }); ok('reminder settings persist');
   r = await call('PUT', '/reminder', { enabled: 'yes', time: '25:99', lastFired: '' }); assert.equal(r.status, 400); ok('bad reminder settings rejected');
   console.log(`\n${n} checks passed.`);
-} finally { server.close(); }
+} finally { server.close(); await db.dropDatabase(); await client.close(); }

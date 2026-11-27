@@ -1,11 +1,11 @@
 # Lab Exercise 5 & 6: Domain-Based React Application
 
 **Domain:** Carbon Footprint Tracker & Reduction Recommender (CarbonFootprint India)
-**Stack:** React, TypeScript, Vite, GSAP, Express, SQLite
+**Stack:** React, TypeScript, Vite, GSAP, Express, MongoDB
 
 ## 1. Overview
 
-In Part 1 the CarbonFootprint India module was built with HTML, Tailwind CSS and JavaScript. It lets a person log daily activities (travel, home energy, food, shopping), converts them to kg CO₂e with illustrative emission factors, and compares the day against a 6.3 kg budget. Part 2 rebuilds the same module in React with TypeScript, adds persistent CRUD operations through an Express API backed by SQLite, and animates the interface with GSAP. The categories, emission factors, budget and recommendation rules are carried over unchanged.
+In Part 1 the CarbonFootprint India module was built with HTML, Tailwind CSS and JavaScript. It lets a person log daily activities (travel, home energy, food, shopping), converts them to kg CO₂e with illustrative emission factors, and compares the day against a 6.3 kg budget. Part 2 rebuilds the same module in React with TypeScript, adds persistent CRUD operations through an Express API backed by MongoDB, and animates the interface with GSAP. The categories, emission factors, budget and recommendation rules are carried over unchanged.
 
 ## 2. Architecture
 
@@ -19,9 +19,9 @@ The page is split into small, typed components. `App` owns the shared state (sea
 - **Form handling** with multiple inputs: a radio group for the category, a select for the activity, a number input with a dynamic unit, and a date input. Validation messages appear per field, and a live estimate updates as the person types.
 - **Dynamic rendering** of the log, receipt, charts and recommendations from state.
 
-## 4. CRUD with SQLite
+## 4. CRUD with MongoDB
 
-Records are stored in the `entries` table of a SQLite database (`data/carbon.db`) and accessed over REST at `/entries` through a small Express server using `better-sqlite3`. The server validates every request and recalculates kg CO₂e from the emission catalogue before saving:
+Records are stored in the `entries` collection of a MongoDB database and accessed over REST at `/entries` through a small Express server using the official `mongodb` driver. Each entry keeps a numeric `id` from a counter collection, so the React app and the REST shapes did not change. The server validates every request and recalculates kg CO₂e from the emission catalogue before saving:
 
 | Operation | Request | UI |
 |---|---|---|
@@ -30,7 +30,7 @@ Records are stored in the `entries` table of a SQLite database (`data/carbon.db`
 | Update | `PUT /entries/:id` | "Edit" fills the form, "Save changes" |
 | Delete | `DELETE /entries/:id` | "Delete" on a row |
 
-Pledges (`/pledges`) and the daily-reminder settings (`/reminder`) are stored in their own SQLite tables, so nothing the app remembers depends on the browser except the theme choice and the unsent form draft.
+Pledges (`/pledges`) and the daily-reminder settings (`/reminder`) are stored in their own MongoDB collections, so nothing the app remembers depends on the browser except the theme choice and the unsent form draft.
 
 The bonus search box filters the list live by activity, category or date. If the server is not running, the log shows a clear error with a retry button.
 

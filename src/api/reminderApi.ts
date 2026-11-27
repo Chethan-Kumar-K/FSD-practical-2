@@ -6,7 +6,7 @@ export interface ReminderSettings {
   lastFired: string; // YYYY-MM-DD or ''
 }
 
-/** `saved` is false until the settings have been stored in SQLite for the first time. */
+/** `saved` is false until the settings have been stored in MongoDB for the first time. */
 export const getReminder = () => request<ReminderSettings & { saved: boolean }>('/reminder');
 
 export const saveReminder = (settings: ReminderSettings) =>

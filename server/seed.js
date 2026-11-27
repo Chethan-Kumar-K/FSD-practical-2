@@ -1,7 +1,7 @@
 // Sample data: 60 days of an ordinary routine ending today, so the charts are not empty.
-//   npm run seed   replaces every entry in the SQLite database with fresh sample data
+//   npm run seed   replaces every entry in the MongoDB database with fresh sample data
 import { pathToFileURL } from 'node:url';
-import { openDb } from './db.js';
+import { connectDb, reserveEntryIds } from './db.js';
 import { KIND } from './catalogue.js';
 
 const pad = (n) => String(n).padStart(2, '0');
@@ -31,16 +31,21 @@ export function sampleEntries() {
   return rows;
 }
 
-export function insertRows(db, rows, replace = false) {
-  const insert = db.prepare('INSERT INTO entries (date, cat, kind, label, amount, unit, kg) VALUES (@date, @cat, @kind, @label, @amount, @unit, @kg)');
-  db.transaction(() => {
-    if (replace) db.prepare('DELETE FROM entries').run();
-    for (const r of rows) insert.run(r);
-  })();
+/** Stores the rows with consecutive numeric ids. `replace` empties the entries first and restarts the ids at 1. */
+export async function insertRows(db, rows, replace = false) {
+  if (replace) {
+    await db.collection('entries').deleteMany({});
+    await db.collection('counters').deleteOne({ _id: 'entries' });
+  }
+  if (!rows.length) return 0;
+  const first = await reserveEntryIds(db, rows.length);
+  await db.collection('entries').insertMany(rows.map((r, i) => ({ id: first + i, ...r })));
   return rows.length;
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const { db } = openDb();
-  console.log(`SQLite database seeded with ${insertRows(db, sampleEntries(), true)} entries.`);
+  try { process.loadEnvFile(); } catch { /* no .env file */ }
+  const { client, db } = await connectDb();
+  console.log(`MongoDB seeded with ${await insertRows(db, sampleEntries(), true)} entries.`);
+  await client.close();
 }

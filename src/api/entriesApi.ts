@@ -1,6 +1,6 @@
 import type { EntryInput, FootprintEntry } from '../types';
 
-/** API base URL (Express + SQLite). Override with VITE_API_URL in a .env file if needed. */
+/** API base URL (Express + MongoDB). Override with VITE_API_URL in a .env file if needed. */
 const BASE: string = import.meta.env.VITE_API_URL ?? 'http://localhost:3001';
 
 export async function request<T>(path: string, init?: RequestInit): Promise<T> {

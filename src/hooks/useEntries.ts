@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import type { EntryInput, FootprintEntry } from '../types';
 import * as api from '../api/entriesApi';
 
-/** Holds the log in state and keeps it in step with the SQLite API (full CRUD). */
+/** Holds the log in state and keeps it in step with the MongoDB API (full CRUD). */
 export function useEntries() {
   const [entries, setEntries] = useState<FootprintEntry[]>([]);
   const [loading, setLoading] = useState(true);

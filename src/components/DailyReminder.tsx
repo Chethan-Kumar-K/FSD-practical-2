@@ -8,7 +8,7 @@ interface ReminderSettings {
   lastFired: string;
 }
 
-const LEGACY_KEY = 'cfi.reminder'; // where the settings lived before SQLite; read once, then removed
+const LEGACY_KEY = 'cfi.reminder'; // where the settings lived before MongoDB; read once, then removed
 const DEFAULT_SETTINGS: ReminderSettings = { enabled: false, time: '20:00', lastFired: '' };
 
 function readLegacy(): ReminderSettings | null {
@@ -43,7 +43,7 @@ export function DailyReminder({ hasLoggedToday, onNotify }: DailyReminderProps) 
   const [loaded, setLoaded] = useState(false);
   const [status, setStatus] = useState('');
 
-  // Load the settings from SQLite once. Settings kept in this browser by the old version are moved over.
+  // Load the settings from MongoDB once. Settings kept in this browser by the old version are moved over.
   useEffect(() => {
     let cancelled = false;
     getReminder()
@@ -62,7 +62,7 @@ export function DailyReminder({ hasLoggedToday, onNotify }: DailyReminderProps) 
     return () => { cancelled = true; };
   }, []);
 
-  // Every change is stored in SQLite (only after the first load, so the defaults never overwrite saved settings)
+  // Every change is stored in MongoDB (only after the first load, so the defaults never overwrite saved settings)
   useEffect(() => {
     if (!loaded) return;
     saveReminder(settings).catch(() => setStatus('Reminder settings could not be saved. Is the API server running on port 3001?'));

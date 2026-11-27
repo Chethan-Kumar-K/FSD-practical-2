@@ -4,7 +4,7 @@ import * as api from '../api/pledgesApi';
 
 const LEGACY_KEY = 'cfi.pledges';
 
-/** Pledges before they lived in SQLite were kept in this browser; read them once so nothing is lost. */
+/** Pledges before they lived in MongoDB were kept in this browser; read them once so nothing is lost. */
 function readLegacy(): Pledge[] {
   try {
     const saved: unknown = JSON.parse(localStorage.getItem(LEGACY_KEY) ?? '[]');
@@ -19,7 +19,7 @@ function readLegacy(): Pledge[] {
   }
 }
 
-/** Holds the pledges in state and keeps them in step with the SQLite API. Writers throw on failure. */
+/** Holds the pledges in state and keeps them in step with the MongoDB API. Writers throw on failure. */
 export function usePledges() {
   const [pledges, setPledges] = useState<Pledge[]>([]);
 
